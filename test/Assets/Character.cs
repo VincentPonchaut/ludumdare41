@@ -52,15 +52,9 @@ public class Character : MonoBehaviour
         item.GetComponent<Rigidbody2D>().velocity = new Vector2(directionVec.x, directionVec.y) * this.ThrowSpeed;
     }
 
-    void move()
+    public void OnCollisionEnter2D()
     {
-        float lockPos = 0;
 
-        float moveH = Input.GetAxis("Horizontal");
-        float moveV = Input.GetAxis("Vertical");
-
-        transform.Translate(moveH * MovementSpeed * Time.deltaTime, moveV * MovementSpeed * Time.deltaTime, 0);
-        transform.rotation = Quaternion.Euler(lockPos, lockPos, lockPos);
     }
 
     // Use this for initialization
@@ -77,7 +71,5 @@ public class Character : MonoBehaviour
 
         if (Input.GetKeyDown("space"))
             this.Throw();
-
-        move();
     }
 }

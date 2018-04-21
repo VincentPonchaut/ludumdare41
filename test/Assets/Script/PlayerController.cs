@@ -18,5 +18,18 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown("space"))
             character.Throw();
+
+        Move();
+    }
+
+    private void Move()
+    {
+        float lockPos = 0;
+
+        float moveH = Input.GetAxis("Horizontal");
+        float moveV = Input.GetAxis("Vertical");
+
+        transform.Translate(moveH * character.MovementSpeed * Time.deltaTime, moveV * character.MovementSpeed * Time.deltaTime, 0);
+        transform.rotation = Quaternion.Euler(lockPos, lockPos, lockPos);
     }
 }

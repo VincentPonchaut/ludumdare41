@@ -19,11 +19,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224979274196851740}
-  - component: {fileID: 114838443746072190}
   - component: {fileID: 50659309324290414}
+  - component: {fileID: 61401190056487332}
   - component: {fileID: 222076634797338480}
   - component: {fileID: 212697318179895846}
-  - component: {fileID: 61401190056487332}
   - component: {fileID: 114992217556492962}
   m_Layer: 0
   m_Name: Carrot
@@ -77,18 +76,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114838443746072190
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1794505466801872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0bbb2e6e5096e144882a3608f484050, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitPrefab: {fileID: 0}
 --- !u!114 &114992217556492962
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,6 +88,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPrefab: {fileID: 1467905769051378, guid: e4455041b5d55b04cb799e9fa3be5d32, type: 2}
+  Thrower: {fileID: 0}
 --- !u!212 &212697318179895846
 SpriteRenderer:
   m_ObjectHideFlags: 1

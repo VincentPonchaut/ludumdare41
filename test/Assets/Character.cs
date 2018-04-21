@@ -13,6 +13,7 @@ public class Character : MonoBehaviour
 
     // Stats
     public int Life = 100;
+    public int Strength = 10;
     public int MovementSpeed = 1;
     public float ThrowSpeed = 10.0f;
 
@@ -23,6 +24,8 @@ public class Character : MonoBehaviour
     // Position
     public Grid CurrentLevel;
     public Vector3Int CellPosition;
+
+    #region Character Specific
 
     public void Throw()
     {
@@ -42,20 +45,45 @@ public class Character : MonoBehaviour
         }
 
         // Spawn a new ThrowableItem
-        //ThrowableItem item = new ThrowableItem(this.ItemType);
         Vector3Int targetPos = this.CellPosition;
         targetPos.x = itemSpawnPointX;
 
         Vector3Int directionVec = targetPos - this.CellPosition;
         
         GameObject item = Instantiate(this.Item, this.CurrentLevel.CellToLocal(targetPos), Quaternion.identity);
+        Debug.Log("ALELELELELLE" + item.GetComponent<ThrowableItem>());
+
+        ThrowableItem tItem = item.GetComponent<ThrowableItem>();
+        if (tItem == null)
+        {
+            Debug.Log("Error while creating throwable item");
+            DestroyImmediate(item);
+            return;
+        }
+        tItem.Thrower = this;
         item.GetComponent<Rigidbody2D>().velocity = new Vector2(directionVec.x, directionVec.y) * this.ThrowSpeed;
     }
 
-    public void OnCollisionEnter2D()
+    public void ApplyDamageFrom(Character enemy, ThrowableItem item)
+    {
+        Debug.Log("Applying damage from " + enemy + " to " + this);
+
+        int dmg = enemy.Strength;
+        // TODO: factor in item later
+
+        this.Life -= dmg;
+        Debug.Log(this + " [Life: " + Life + "]");
+
+        if (this.Life < 0)
+            Destroy(this.gameObject);
+    }
+    void OnCollisionEnter2D()
     {
 
     }
+    #endregion
+
+    #region Unity Behavior
 
     // Use this for initialization
     void Start()
@@ -72,4 +100,6 @@ public class Character : MonoBehaviour
         if (Input.GetKeyDown("space"))
             this.Throw();
     }
+
+    #endregion
 }

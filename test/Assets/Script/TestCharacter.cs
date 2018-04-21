@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : MonoBehaviour {
+public class TestCharacter : MonoBehaviour {
 
     public int speed = 10;
 

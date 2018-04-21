@@ -79,9 +79,12 @@ public class LevelManager : MonoBehaviour
 
     private CharacterData characterData = new CharacterData();
 
+    // User Interface
+    public GameObject MainUI;
+
     private QuestionList questionList;
     private Question activeQuestion;
-    public GameObject QuestionCanvas;
+    public GameObject QuestionOverlay;
     public GameObject QuestionText;
     public GameObject Ans1Text;
     public GameObject Ans2Text;
@@ -204,7 +207,7 @@ public class LevelManager : MonoBehaviour
         // TODO: Random question
 
         SetupRandomQuestion();
-        QuestionCanvas.SetActive(true);
+        QuestionOverlay.SetActive(true);
         //pausePanel.SetActive(true);
         //Disable scripts that still work while timescale is set to 0
     }
@@ -212,7 +215,7 @@ public class LevelManager : MonoBehaviour
     public void ResumeGame()
     {
         Time.timeScale = 1;
-        QuestionCanvas.SetActive(false);
+        QuestionOverlay.SetActive(false);
         //pausePanel.SetActive(false);
         //enable the scripts again
     }
@@ -306,7 +309,7 @@ public class LevelManager : MonoBehaviour
         // Connections
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        DontDestroyOnLoad(this.QuestionCanvas);
+        DontDestroyOnLoad(this.MainUI);
         InitializeQuestions();
 
         // Show start menu

@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 50798834872345394}
   - component: {fileID: 60756383350445000}
   m_Layer: 0
-  m_Name: Charly 1
+  m_Name: Charly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -184,6 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Life: 100
+  Strength: 10
   MovementSpeed: 5
   ThrowSpeed: 10
   Direction: 0

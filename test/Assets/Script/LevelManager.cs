@@ -47,6 +47,7 @@ public class LevelManager : MonoBehaviour
 
     private string CurrentLevel;
     private int CurrentLevelMaxEnemies;
+    private Grid CurrentGrid;
     private bool WasLastAnswerCorrect = true;
 
     public int RandomLevelIndexMin = 0;
@@ -115,6 +116,9 @@ public class LevelManager : MonoBehaviour
     {
         if (arg0.name.StartsWith("level"))
         {
+            CurrentGrid = FindObjectOfType<Grid>();
+            Character.CurrentLevel = CurrentGrid;
+
             // Spawn player
             SpawnPlayer();
 
@@ -131,9 +135,8 @@ public class LevelManager : MonoBehaviour
         Character c = o.GetComponent<Character>();
         if (c != null)
         {
-            //if (!characterData.isNull)
-            //    characterData.WriteData(c);
-            c.CurrentLevel = FindObjectOfType<Grid>();  
+            if (!characterData.isNull)
+                characterData.WriteData(c);
         }
         c.GetComponent<SpriteRenderer>().sortingOrder = 50;
 

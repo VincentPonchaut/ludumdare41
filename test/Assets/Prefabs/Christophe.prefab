@@ -134,7 +134,7 @@ MonoBehaviour:
   MovementSpeed: 5
   ThrowSpeed: 10
   Direction: 1
-  Item: {fileID: 1412042934305358, guid: 8dbea02ae03a31e43afb8f5076e9b38d, type: 2}
+  Item: {fileID: 1794505466801872, guid: 697696e0be72ab44db9c5e81cca5e52d, type: 2}
   CurrentLevel: {fileID: 0}
   CellPosition: {x: 0, y: 0, z: 0}
 --- !u!212 &212024977084967678

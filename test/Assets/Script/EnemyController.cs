@@ -18,7 +18,7 @@ public class EnemyController : MonoBehaviour
     {
 #if UNITY_EDITOR
         // Debug only
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown("u"))
             character.Throw();
 #endif
     }

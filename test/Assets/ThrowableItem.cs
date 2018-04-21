@@ -13,7 +13,7 @@ public class ThrowableItem : MonoBehaviour
         {
             //ContactPoint2D contact = collision.contacts[0];
             //Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
-            //Vector3 pos = contact.point;
+               //Vector3 pos = contact.point;
 
             GameObject hitObject = Instantiate(hitPrefab, transform.localPosition, transform.localRotation) as GameObject;
             Destroy(collision.gameObject);

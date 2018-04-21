@@ -14,6 +14,10 @@ public class Character : MonoBehaviour
         Right
     };
 
+    public delegate void DestroyDelegate();
+    public DestroyDelegate destroyedEvent;
+
+    #region Attributes
     // Stats
     public int Life = 100;
     public int Strength = 10;
@@ -26,8 +30,9 @@ public class Character : MonoBehaviour
 
     // Position
     public Vector3Int CellPosition;
+    #endregion
 
-    #region Character Specific
+    #region Character Methods
 
     public void Throw()
     {
@@ -99,6 +104,11 @@ public class Character : MonoBehaviour
     {
         if (CurrentLevel != null)
             this.CellPosition = CurrentLevel.LocalToCell(transform.localPosition);
+    }
+
+    private void OnDestroy()
+    {
+        destroyedEvent();
     }
 
     #endregion

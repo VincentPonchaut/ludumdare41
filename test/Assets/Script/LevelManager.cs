@@ -171,6 +171,20 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+        //pausePanel.SetActive(true);
+        //Disable scripts that still work while timescale is set to 0
+    }
+
+    public void ContinueGame()
+    {
+        Time.timeScale = 1;
+        //pausePanel.SetActive(false);
+        //enable the scripts again
+    }
+
     #endregion
 
     #region UnityBehavior
@@ -201,7 +215,10 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown("p"))
+            PauseGame();
+        else if (Input.GetKeyDown("c"))
+            ContinueGame();
     }
     #endregion
 }

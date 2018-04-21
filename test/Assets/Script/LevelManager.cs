@@ -41,7 +41,19 @@ class CharacterData
 
 public class LevelManager : MonoBehaviour
 {
-    private LevelManager instance;
+    private static LevelManager instance;
+    public static LevelManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+
+        set
+        {
+            instance = value;
+        }
+    }
 
     private int LevelCount; // number of level achieved 
     public int NbEnemyPerLevel;
@@ -60,6 +72,8 @@ public class LevelManager : MonoBehaviour
 
     private CharacterData characterData = new CharacterData();
 
+    
+
     #region Methods
 
     public void ShowStartMenu()
@@ -77,6 +91,7 @@ public class LevelManager : MonoBehaviour
         // TODO
         // Unload current level
         // Load Question level
+        NextLevel();
     }
 
     private void RestartLevel()
@@ -168,7 +183,8 @@ public class LevelManager : MonoBehaviour
         CurrentLevelEnemyNumber--;
         if (CurrentLevelEnemyNumber <= 0)
         {
-            //CurrentGrid//UpdateCurrentLevelMap();
+            GameObject ExitTilemap = GameObject.FindGameObjectWithTag("Exit");
+            ExitTilemap.GetComponent<ExitScript>().ChangeExitSprite();
         }
     }
 
@@ -178,12 +194,12 @@ public class LevelManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
             DontDestroyOnLoad(gameObject);
-            instance = this;
+            Instance = this;
         }
-        else if (instance != this)
+        else if (Instance != this)
         {
             Destroy(gameObject);
         }

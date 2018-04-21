@@ -51,7 +51,6 @@ public class Character : MonoBehaviour
         Vector3Int directionVec = targetPos - this.CellPosition;
         
         GameObject item = Instantiate(this.Item, this.CurrentLevel.CellToLocal(targetPos), Quaternion.identity);
-        Debug.Log("ALELELELELLE" + item.GetComponent<ThrowableItem>());
 
         ThrowableItem tItem = item.GetComponent<ThrowableItem>();
         if (tItem == null)

@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 95113226739539500}
   - component: {fileID: 114181623997045564}
   - component: {fileID: 50798834872345394}
-  - component: {fileID: 60756383350445000}
   - component: {fileID: 114317654699421170}
+  - component: {fileID: 61051533257320394}
   m_Layer: 0
   m_Name: Charly
   m_TagString: Untagged
@@ -40,7 +40,7 @@ Transform:
   m_GameObject: {fileID: 1227978873114666}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.167, y: -1.633, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.35557395}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.35557395}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -65,8 +65,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &60756383350445000
-PolygonCollider2D:
+--- !u!61 &61051533257320394
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -77,7 +77,7 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -1.1734147}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -87,75 +87,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.90999997, y: -2.1}
-      - {x: 0.78, y: -1.88}
-      - {x: 0.68, y: -1.74}
-      - {x: 0.5, y: -1.4399999}
-      - {x: 0.38, y: -1.18}
-      - {x: 0.35, y: -1.01}
-      - {x: 0.29999998, y: -0.78999996}
-      - {x: 0.38, y: -0.7}
-      - {x: 0.59999996, y: -0.72999996}
-      - {x: 0.79999995, y: -0.96999997}
-      - {x: 0.88, y: -0.98999995}
-      - {x: 1.02, y: -0.88}
-      - {x: 1.3199999, y: -0.56}
-      - {x: 1.31, y: -0.35}
-      - {x: 1.26, y: -0.26}
-      - {x: 1.35, y: -0.049999997}
-      - {x: 1.49, y: 0}
-      - {x: 1.49, y: 0.21}
-      - {x: 1.39, y: 0.28}
-      - {x: 1.42, y: 0.39999998}
-      - {x: 1.49, y: 0.52}
-      - {x: 1.49, y: 0.63}
-      - {x: 1.4499999, y: 0.72999996}
-      - {x: 1.39, y: 0.7}
-      - {x: 1.26, y: 0.65}
-      - {x: 1.1999999, y: 0.74}
-      - {x: 1.09, y: 0.69}
-      - {x: 0.87, y: 0.75}
-      - {x: 0.75, y: 0.75}
-      - {x: 0.74, y: 0.71999997}
-      - {x: 0.82, y: 0.59}
-      - {x: 0.69, y: 0.31}
-      - {x: 0.53, y: 0.25}
-      - {x: 0.44, y: 0.37}
-      - {x: 0.44, y: 0.69}
-      - {x: 0.42, y: 0.79999995}
-      - {x: 0.38, y: 2.27}
-      - {x: 0.39999998, y: 2.36}
-      - {x: 0.25, y: 2.5}
-      - {x: -0.03, y: 2.53}
-      - {x: -0.58, y: 2.53}
-      - {x: -0.84, y: 2.49}
-      - {x: -1.03, y: 2.44}
-      - {x: -1.17, y: 2.24}
-      - {x: -1.1999999, y: 2.12}
-      - {x: -1.1899999, y: 1.8}
-      - {x: -1.17, y: 1.51}
-      - {x: -1.16, y: 1.0699999}
-      - {x: -1.23, y: 0.75}
-      - {x: -1.36, y: 0.53}
-      - {x: -1.36, y: 0.42999998}
-      - {x: -1.4499999, y: 0.12}
-      - {x: -1.4499999, y: -0.02}
-      - {x: -1.35, y: -0.34}
-      - {x: -1.1899999, y: -0.48}
-      - {x: -1.2099999, y: -0.65}
-      - {x: -1.35, y: -1.03}
-      - {x: -1.39, y: -1.29}
-      - {x: -1.53, y: -1.7199999}
-      - {x: -1.53, y: -2.06}
-      - {x: -1.35, y: -2.36}
-      - {x: -1.2099999, y: -2.54}
-      - {x: -1.18, y: -2.55}
-      - {x: 0.5, y: -2.55}
-      - {x: 0.64, y: -2.4299998}
-      - {x: 0.71999997, y: -2.4299998}
-      - {x: 0.91999996, y: -2.24}
+  serializedVersion: 2
+  m_Size: {x: 3.1, y: 2.75317}
+  m_EdgeRadius: 0
 --- !u!95 &95113226739539500
 Animator:
   serializedVersion: 3
@@ -188,8 +122,8 @@ MonoBehaviour:
   Strength: 10
   MovementSpeed: 5
   ThrowSpeed: 10
-  Direction: 0
-  Item: {fileID: 0}
+  Direction: 1
+  Item: {fileID: 1412042934305358, guid: 8dbea02ae03a31e43afb8f5076e9b38d, type: 2}
   CurrentLevel: {fileID: 0}
   CellPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &114317654699421170

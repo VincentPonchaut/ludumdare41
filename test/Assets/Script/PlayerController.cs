@@ -28,8 +28,22 @@ public class PlayerController : MonoBehaviour
 
         float moveH = Input.GetAxis("Horizontal");
         float moveV = Input.GetAxis("Vertical");
-
+       
         transform.Translate(moveH * character.MovementSpeed * Time.deltaTime, moveV * character.MovementSpeed * Time.deltaTime, 0);
         transform.rotation = Quaternion.Euler(lockPos, lockPos, lockPos);
+
+        // Cancel forces
+        this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+
+        if (moveH < 0)
+        {
+            character.Direction = Character.ThrowDirection.Left;
+            character.GetComponent<SpriteRenderer>().flipX = true;
+        }
+        else if (moveH > 0)
+        {
+            character.Direction = Character.ThrowDirection.Right;
+            character.GetComponent<SpriteRenderer>().flipX = false;
+        }
     }
 }

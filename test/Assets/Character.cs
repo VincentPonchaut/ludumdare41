@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    public enum ThrowDirection {
+    public static Grid CurrentLevel;
+
+    public enum ThrowDirection
+    {
         //Up, // future updates
         //Down,
         Left,
@@ -22,7 +25,6 @@ public class Character : MonoBehaviour
     public GameObject Item;
 
     // Position
-    public Grid CurrentLevel;
     public Vector3Int CellPosition;
 
     #region Character Specific
@@ -48,10 +50,8 @@ public class Character : MonoBehaviour
         Vector3Int targetPos = this.CellPosition;
         targetPos.x = itemSpawnPointX;
 
-        Vector3Int directionVec = targetPos - this.CellPosition;
         
-        GameObject item = Instantiate(this.Item, this.CurrentLevel.CellToLocal(targetPos), Quaternion.identity);
-        Debug.Log("ALELELELELLE" + item.GetComponent<ThrowableItem>());
+        GameObject item = Instantiate(this.Item, CurrentLevel.CellToLocal(targetPos), Quaternion.identity);
 
         ThrowableItem tItem = item.GetComponent<ThrowableItem>();
         if (tItem == null)
@@ -61,6 +61,8 @@ public class Character : MonoBehaviour
             return;
         }
         tItem.Thrower = this;
+
+        Vector3Int directionVec = targetPos - this.CellPosition;
         item.GetComponent<Rigidbody2D>().velocity = new Vector2(directionVec.x, directionVec.y) * this.ThrowSpeed;
     }
 
@@ -95,10 +97,8 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.CellPosition = this.CurrentLevel.LocalToCell(transform.localPosition);
-
-        if (Input.GetKeyDown("space"))
-            this.Throw();
+        if (CurrentLevel != null)
+            this.CellPosition = CurrentLevel.LocalToCell(transform.localPosition);
     }
 
     #endregion

@@ -303,11 +303,6 @@ Prefab:
       propertyPath: CurrentLevel
       value: 
       objectReference: {fileID: 171543266}
-    - target: {fileID: 114861806288751458, guid: 4ffe9bb87aa4a3949ab1e2985da3d11e,
-        type: 2}
-      propertyPath: Life
-      value: 102
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ffe9bb87aa4a3949ab1e2985da3d11e, type: 2}
   m_IsPrefabParent: 0

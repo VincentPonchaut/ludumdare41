@@ -77,6 +77,16 @@ public class Character : MonoBehaviour
         if (this.Life < 0)
             Destroy(this.gameObject);
     }
+    void move()
+    {
+        float lockPos = 0;
+
+        float moveH = Input.GetAxis("Horizontal");
+        float moveV = Input.GetAxis("Vertical");
+
+        transform.Translate(moveH * MovementSpeed * Time.deltaTime, moveV * MovementSpeed * Time.deltaTime, 0);
+        transform.rotation = Quaternion.Euler(lockPos, lockPos, lockPos);
+    }
     #endregion
 
     #region Unity Behavior
@@ -92,6 +102,11 @@ public class Character : MonoBehaviour
     void Update()
     {
         this.CellPosition = this.CurrentLevel.LocalToCell(transform.localPosition);
+
+        if (Input.GetKeyDown("space"))
+            this.Throw();
+
+        move();
     }
 
     #endregion

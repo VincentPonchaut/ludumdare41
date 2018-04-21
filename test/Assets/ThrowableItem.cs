@@ -9,6 +9,8 @@ public class ThrowableItem : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        //Debug.Log(this + " collided with " + collision.gameObject);
+
         if (collision.gameObject.GetComponent<ThrowableItem>())
         {
             //ContactPoint2D contact = collision.contacts[0];
@@ -22,10 +24,9 @@ public class ThrowableItem : MonoBehaviour
         else if (this.Thrower != null && collision.gameObject.GetComponent<Character>())
         {
             Character hitCharacter = collision.gameObject.GetComponent<Character>();
-            if (hitCharacter != this.Thrower)
-            {
-                hitCharacter.ApplyDamageFrom(this.Thrower, this);
-            }
+            if (hitCharacter == this.Thrower)
+                return;
+            hitCharacter.ApplyDamageFrom(this.Thrower, this);
         }
 
         Destroy(this.gameObject);

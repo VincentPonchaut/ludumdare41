@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 267499451}
   - component: {fileID: 267499450}
   - component: {fileID: 267499452}
+  - component: {fileID: 267499453}
   m_Layer: 0
   m_Name: Exit
   m_TagString: Untagged
@@ -265,6 +266,17 @@ TilemapCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+--- !u!114 &267499453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 267499448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbaa6d695f202f648a671227f48fb8de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &435782127
 GameObject:
   m_ObjectHideFlags: 0

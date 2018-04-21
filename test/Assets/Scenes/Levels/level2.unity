@@ -3183,6 +3183,7 @@ GameObject:
   - component: {fileID: 1168228193}
   - component: {fileID: 1168228195}
   - component: {fileID: 1168228194}
+  - component: {fileID: 1168228196}
   m_Layer: 0
   m_Name: Exit
   m_TagString: Untagged
@@ -3278,6 +3279,17 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1168228196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1168228192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbaa6d695f202f648a671227f48fb8de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1749756141
 GameObject:
   m_ObjectHideFlags: 0

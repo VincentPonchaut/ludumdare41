@@ -18,17 +18,11 @@ public class Character : MonoBehaviour
 
     // Item Management
     public ThrowDirection Direction;
-    //public string ItemType;
     public GameObject Item;
 
     // Position
     public Grid CurrentLevel;
     public Vector3Int CellPosition;
-
-    //public void EquipThrowableItem(string itemType)
-    //{
-    //    this.Item.ResourcePath = itemType;
-    //}
 
     public void Throw()
     {
@@ -69,8 +63,5 @@ public class Character : MonoBehaviour
     void Update()
     {
         this.CellPosition = this.CurrentLevel.LocalToCell(transform.localPosition);
-
-        if (Input.GetKeyDown("space"))
-            this.Throw();
     }
 }

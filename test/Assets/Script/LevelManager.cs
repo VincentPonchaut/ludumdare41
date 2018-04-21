@@ -158,11 +158,11 @@ public class LevelManager : MonoBehaviour
             GameObject o = Instantiate(templateEnemyCharacter) as GameObject;
             o.GetComponent<SpriteRenderer>().sortingOrder = 50;
 
-            o.GetComponent<Character>().destroyedEvent += HandleEnemyDestroyed();
+            o.GetComponent<Character>().destroyedEvent += HandleEnemyDestroyed;
         }
     }
 
-    private Character.DestroyDelegate HandleEnemyDestroyed()
+    private void HandleEnemyDestroyed()
     {
         CurrentLevelEnemyNumber--;
         if (CurrentLevelEnemyNumber <= 0)

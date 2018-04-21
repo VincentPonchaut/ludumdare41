@@ -61,7 +61,19 @@ public class Question
 
 public class LevelManager : MonoBehaviour
 {
-    private LevelManager instance;
+    private static LevelManager instance;
+    public static LevelManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+
+        set
+        {
+            instance = value;
+        }
+    }
 
     private int LevelCount; // number of level achieved 
     public int NbEnemyPerLevel;
@@ -82,6 +94,8 @@ public class LevelManager : MonoBehaviour
     // User Interface
     public GameObject MainUI;
 
+    #region Methods
+    
     private QuestionList questionList;
     private Question activeQuestion;
     public GameObject QuestionOverlay;
@@ -91,7 +105,6 @@ public class LevelManager : MonoBehaviour
     public GameObject Ans3Text;
     public GameObject Ans4Text;
 
-    #region Methods ----------------------------------------------------------------------------------
 
     public void ShowStartMenu()
     {
@@ -105,9 +118,7 @@ public class LevelManager : MonoBehaviour
 
     public void AttemptExit(/*Vector2 exitPosition*/)
     {
-        // TODO
-        // Unload current level
-        // Load Question level
+        NextLevel();
     }
 
     private void RestartLevel()
@@ -196,7 +207,8 @@ public class LevelManager : MonoBehaviour
         CurrentLevelEnemyNumber--;
         if (CurrentLevelEnemyNumber <= 0)
         {
-            //CurrentGrid//UpdateCurrentLevelMap();
+            GameObject ExitTilemap = GameObject.FindGameObjectWithTag("Exit");
+            ExitTilemap.GetComponent<ExitScript>().ChangeExitSprite();
         }
     }
 
@@ -292,12 +304,12 @@ public class LevelManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
             DontDestroyOnLoad(gameObject);
-            instance = this;
+            Instance = this;
         }
-        else if (instance != this)
+        else if (Instance != this)
         {
             Destroy(gameObject);
         }

@@ -140,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7880b52fa5b319f45a8dda1cda706c3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NbEnemyPerLevel: 5
   RandomLevelIndexMin: 1
   RandomLevelIndexMax: 3
   templatePlayerCharacter: {fileID: 1227978873114666, guid: 054c3facc9122a24d974f43de0babeda,

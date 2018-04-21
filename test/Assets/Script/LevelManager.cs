@@ -44,6 +44,7 @@ public class LevelManager : MonoBehaviour
     private LevelManager instance;
 
     private int LevelCount; // number of level achieved 
+    public int NbEnemyPerLevel;
 
     private string CurrentLevel;
     private int CurrentLevelMaxEnemies;
@@ -146,7 +147,7 @@ public class LevelManager : MonoBehaviour
 
     private void SpawnRandomEnemies()
     {
-        int nEnemiesToSpawn = 10; // TODO
+        int nEnemiesToSpawn = NbEnemyPerLevel; // TODO
         CurrentLevelEnemyNumber = nEnemiesToSpawn;
 
         if (!WasLastAnswerCorrect)
@@ -167,7 +168,7 @@ public class LevelManager : MonoBehaviour
         CurrentLevelEnemyNumber--;
         if (CurrentLevelEnemyNumber <= 0)
         {
-            //UpdateCurrentLevelMap();
+            //CurrentGrid//UpdateCurrentLevelMap();
         }
     }
 

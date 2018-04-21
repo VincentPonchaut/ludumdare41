@@ -47,6 +47,7 @@ public class LevelManager : MonoBehaviour
 
     private string CurrentLevel;
     private int CurrentLevelMaxEnemies;
+    private int CurrentLevelEnemyNumber;
     private Grid CurrentGrid;
     private bool WasLastAnswerCorrect = true;
 
@@ -146,6 +147,7 @@ public class LevelManager : MonoBehaviour
     private void SpawnRandomEnemies()
     {
         int nEnemiesToSpawn = 10; // TODO
+        CurrentLevelEnemyNumber = nEnemiesToSpawn;
 
         if (!WasLastAnswerCorrect)
             nEnemiesToSpawn *= 2;
@@ -155,6 +157,17 @@ public class LevelManager : MonoBehaviour
             // TODO: determine random position
             GameObject o = Instantiate(templateEnemyCharacter) as GameObject;
             o.GetComponent<SpriteRenderer>().sortingOrder = 50;
+
+            o.GetComponent<Character>().destroyedEvent += HandleEnemyDestroyed();
+        }
+    }
+
+    private Character.DestroyDelegate HandleEnemyDestroyed()
+    {
+        CurrentLevelEnemyNumber--;
+        if (CurrentLevelEnemyNumber <= 0)
+        {
+            //UpdateCurrentLevelMap();
         }
     }
 

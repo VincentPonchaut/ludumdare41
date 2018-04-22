@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -90,7 +91,8 @@ public class Character : MonoBehaviour
 
         this.Life -= dmg;
         Debug.Log(this + " [Life: " + Life + "]");
-        this.damagedEvent(this, dmg); // call all slots
+        if (damagedEvent != null)
+            damagedEvent(this, dmg); // call all slots
 
         if (this.Life <= 0)
             Destroy(this.gameObject);
@@ -113,6 +115,36 @@ public class Character : MonoBehaviour
             this.lastAnimationTime = Time.time;
         }
     }
+    
+    public void MoveBy(float moveH, float moveV)
+    {
+        // TODO: update direction
+        // Translate
+        // Rotate
+        transform.Translate(moveH, moveV, 0);
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        // Cancel forces
+        this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+
+        // Flip if necessary
+        GetComponent<SpriteRenderer>().flipX = (moveH < 0);
+
+        // Determine actual direction
+        if (Math.Abs(moveV) > Math.Abs(moveH))
+        {
+            // Can be either Up or Down
+            Direction = moveV > 0 ? Character.ThrowDirection.Up :
+                                    Character.ThrowDirection.Down;
+        }
+        else
+        {
+            // Can be either Left or Right
+            Direction = moveH < 0 ? Character.ThrowDirection.Left :
+                                    Character.ThrowDirection.Right;
+        }
+    }
+    
     #endregion
 
     #region Unity Behavior
@@ -133,7 +165,8 @@ public class Character : MonoBehaviour
 
     private void OnDestroy()
     {
-        destroyedEvent();
+        if (destroyedEvent != null)
+            destroyedEvent();
     }
 
     #endregion

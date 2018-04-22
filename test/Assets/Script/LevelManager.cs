@@ -219,7 +219,8 @@ public class LevelManager : MonoBehaviour
         if (currentLevelEnemyNumber <= 0)
         {
             GameObject ExitTilemap = GameObject.FindGameObjectWithTag("Exit");
-            ExitTilemap.GetComponent<ExitScript>().ChangeExitSprite();
+            if (ExitTilemap != null)
+                ExitTilemap.GetComponent<ExitScript>().ChangeExitSprite();
         }
     }
 

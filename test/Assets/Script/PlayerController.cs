@@ -32,32 +32,32 @@ public class PlayerController : MonoBehaviour
     {
         character.Animate();
 
-        float lockPos = 0;
-
         float moveH = Input.GetAxis("Horizontal");
         float moveV = Input.GetAxis("Vertical");
-       
-        transform.Translate(moveH * character.MovementSpeed * Time.deltaTime, moveV * character.MovementSpeed * Time.deltaTime, 0);
-        transform.rotation = Quaternion.Euler(lockPos, lockPos, lockPos);
 
-        // Cancel forces
-        this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        character.MoveBy(moveH * character.MovementSpeed * Time.deltaTime,
+                         moveV * character.MovementSpeed * Time.deltaTime);
+        //transform.Translate(moveH * character.MovementSpeed * Time.deltaTime, moveV * character.MovementSpeed * Time.deltaTime, 0);
+        //transform.rotation = Quaternion.Euler(lockPos, lockPos, lockPos);
 
-        // Flip if necessary
-        character.GetComponent<SpriteRenderer>().flipX = (moveH < 0);
+        //// Cancel forces
+        //this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
 
-        // Determine actual direction
-        if (Math.Abs(moveV) > Math.Abs(moveH))
-        {
-            // Can be either Up or Down
-            character.Direction = moveV > 0 ? Character.ThrowDirection.Up :
-                                              Character.ThrowDirection.Down;
-        }
-        else
-        {
-            // Can be either Left or Right
-            character.Direction = moveH < 0 ? Character.ThrowDirection.Left :
-                                              Character.ThrowDirection.Right;
-        }
+        //// Flip if necessary
+        //character.GetComponent<SpriteRenderer>().flipX = (moveH < 0);
+
+        //// Determine actual direction
+        //if (Math.Abs(moveV) > Math.Abs(moveH))
+        //{
+        //    // Can be either Up or Down
+        //    character.Direction = moveV > 0 ? Character.ThrowDirection.Up :
+        //                                      Character.ThrowDirection.Down;
+        //}
+        //else
+        //{
+        //    // Can be either Left or Right
+        //    character.Direction = moveH < 0 ? Character.ThrowDirection.Left :
+        //                                      Character.ThrowDirection.Right;
+        //}
     }
 }

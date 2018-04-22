@@ -119,7 +119,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ReactionTimeMilliseconds: 60
-  FiringRange: 3
+  FireTimeMilliseconds: 1000
+  FiringRange: 8
 --- !u!114 &114887129688616684
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -134,12 +135,14 @@ MonoBehaviour:
   Life: 100
   Strength: 10
   MovementSpeed: 3
-  ThrowSpeed: 10
+  ThrowSpeed: 2
   Direction: 1
   Item: {fileID: 1794505466801872, guid: 697696e0be72ab44db9c5e81cca5e52d, type: 2}
   CellPosition: {x: 0, y: 0, z: 0}
-  Sprites: []
-  AnimationBufferSeconds: 0.3
+  Sprites:
+  - {fileID: 21300000, guid: bef33af397b93ff408194e5d1c6d5967, type: 3}
+  - {fileID: 21300002, guid: bef33af397b93ff408194e5d1c6d5967, type: 3}
+  AnimationBufferSeconds: 0.1
 --- !u!212 &212024977084967678
 SpriteRenderer:
   m_ObjectHideFlags: 1

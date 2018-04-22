@@ -10,10 +10,11 @@ public class EnemyController : MonoBehaviour
     Character target;
 
     public int ReactionTimeMilliseconds = 60;
+    public int FireTimeMilliseconds = 800;
     public int FiringRange = 3;
 
     private float lastActionTime;
-    private int bestReactionTimeMilliseconds;
+    private float lastFireTime;
 
     // Use this for initialization
     void Start()
@@ -21,7 +22,6 @@ public class EnemyController : MonoBehaviour
         character = GetComponent<Character>();
         AcquireTarget();
         lastActionTime = Time.time;
-        bestReactionTimeMilliseconds = ReactionTimeMilliseconds;
     }
 
     void AcquireTarget()
@@ -34,6 +34,8 @@ public class EnemyController : MonoBehaviour
     {
         if ((Time.time - lastActionTime) < ((float) ReactionTimeMilliseconds / 1000.0f))
             return;
+
+        bool firingAuthorized = Time.time - lastFireTime > ((float)FireTimeMilliseconds / 1000.0f);
 
 #if UNITY_EDITOR
         // Debug only
@@ -50,10 +52,10 @@ public class EnemyController : MonoBehaviour
             Vector3 targetDir = targetPos - this.transform.localPosition;
 
             float targetDistance = targetDir.magnitude;
-            if (targetDistance <= FiringRange)
+            if (targetDistance <= FiringRange && firingAuthorized)
             {
                 character.Throw();
-                ReactionTimeMilliseconds *= 2;
+                lastFireTime = Time.time;
             }
             else
             {
@@ -62,9 +64,8 @@ public class EnemyController : MonoBehaviour
                 float moveH = movement.x;
                 float moveV = movement.y;
 
+                character.Animate();
                 character.MoveBy(moveH, moveV);
-                if (ReactionTimeMilliseconds > bestReactionTimeMilliseconds)
-                    ReactionTimeMilliseconds *= 1/64;
             }
         }
         else

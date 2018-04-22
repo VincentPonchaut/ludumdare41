@@ -22,10 +22,9 @@ public class Boss : MonoBehaviour {
         gameObject.transform.localScale.y * 2,
         gameObject.transform.localScale.z);
 
-        Character c = gameObject.GetComponent<Character>();
-        c.Life = c.Life * 20;
-        c.Strength = c.Strength * factor;
-        c.MovementSpeed = c.MovementSpeed * 0.5f;
+        character.Life = character.Life * 20;
+        character.Strength = character.Strength * factor;
+        character.MovementSpeed = character.MovementSpeed * 0.5f;
 
         EnemyController ennemy = gameObject.GetComponent<EnemyController>();
         ennemy.FiringRange = 8;

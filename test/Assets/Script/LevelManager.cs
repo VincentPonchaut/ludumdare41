@@ -175,9 +175,9 @@ public class LevelManager : MonoBehaviour
 
     private void UnloadPreviousLevel()
     {
-        // Store player data first
-        if (this.currentPlayer != null)
-            this.characterData.CopyData(currentPlayer);
+        //// Store player data first
+        //if (this.currentPlayer != null)
+        //    this.characterData.CopyData(currentPlayer);
     }
 
     private void LoadLevel(string levelName)
@@ -210,13 +210,20 @@ public class LevelManager : MonoBehaviour
             GetCinemachineCamera();
 
             // Attempt to play the level's music
-            if (FindObjectOfType<AudioListener>() == null) // hack
-                FindObjectOfType<Camera>().gameObject.AddComponent<AudioListener>();
+            //if (FindObjectOfType<AudioListener>() == null) // hack
+            //    FindObjectOfType<Camera>().gameObject.AddComponent<AudioListener>();
             PlayLevelBGM();
 
             // Refresh observers
             foreach (LevelChangeListener l in FindObjectsOfType<LevelChangeListener>())
                 l.Refresh();
+        }
+        else if (arg0.name.Equals("GameOver"))
+        {
+            // Cleanup
+            Destroy(MainUI.gameObject);
+            Destroy(LevelManager.Instance);
+            Destroy(this.gameObject);
         }
     }
 
@@ -251,9 +258,9 @@ public class LevelManager : MonoBehaviour
         }
         currentPlayer = o.GetComponent<Character>();
 
-        // Restore previous level data
-        if (!characterData.isNull)
-            characterData.WriteData(currentPlayer);
+        //// Restore previous level data
+        //if (!characterData.isNull)
+        //    characterData.WriteData(currentPlayer);
 
         // Ensure character will be visible
         currentPlayer.GetComponent<SpriteRenderer>().sortingOrder = 50;
@@ -273,6 +280,9 @@ public class LevelManager : MonoBehaviour
 
     private void OnPlayerDamaged(Character damagedCharacter, int damageAmount)
     {
+        if (LevelManager.Instance == null)
+            return;
+
         if (damagedCharacter.Life <= 0)
         {
             GameOver();
@@ -359,14 +369,15 @@ public class LevelManager : MonoBehaviour
 
     public void PauseGame()
     {
-        Time.timeScale = 0;
+        if (QuestionOverlay == null)
+            return;
 
-        // TODO: Random question
+        Time.timeScale = 0;
 
         SetupRandomQuestion();
         QuestionOverlay.SetActive(true);
-        //pausePanel.SetActive(true);
-        //Disable scripts that still work while timescale is set to 0
+        
+        // TODO : Disable scripts that still work while timescale is set to 0
     }
 
     public void ResumeGame()
@@ -374,8 +385,8 @@ public class LevelManager : MonoBehaviour
         Time.timeScale = 1;
         AnswerValueText.gameObject.SetActive(false);
         QuestionOverlay.SetActive(false);
-        //pausePanel.SetActive(false);
-        //enable the scripts again
+        
+        // TODO: enable the scripts again
     }
 
     #endregion
@@ -400,6 +411,9 @@ public class LevelManager : MonoBehaviour
 
     public void SetupQuestion(Question theQuestion)
     {
+        if (this.QuestionText == null)
+            return;
+
         Text t = this.QuestionText.GetComponent<Text>();
         t.text = theQuestion.question;
 
@@ -421,13 +435,11 @@ public class LevelManager : MonoBehaviour
         // Handle answer
         if (activeQuestion.correct == answer)
         {
-            Debug.Log("CORRECT");
             HandleCorrectAnswer();
         }
         else
         {
             HandleWrongAnswer();
-            Debug.Log("OHNO");
         }
 
         // Then resume playing
@@ -502,9 +514,6 @@ public class LevelManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        // Connections
-        SceneManager.sceneLoaded += OnSceneLoaded;
-
         DontDestroyOnLoad(this.MainUI);
         InitializeQuestions();
 
@@ -514,18 +523,31 @@ public class LevelManager : MonoBehaviour
         // Initialize variables
         Initialize(RequestedGameMode);
 
+        // Connections
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
         // Go to first level
         NextLevel();
+
+        // Ensure everything is ready to run
+        ResumeGame();
+
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        if (Input.GetKeyDown("p"))
-            PauseGame();
-        else if (Input.GetKeyDown("c"))
-            ResumeGame();
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        currentPlayer.deathEvent -= OnCharacterDeath;
     }
+
+    //// Update is called once per frame
+    //void Update()
+    //{
+    //    //if (Input.GetKeyDown("p"))
+    //    //    PauseGame();
+    //    //else if (Input.GetKeyDown("c"))
+    //    //    ResumeGame();
+    //}
 
     #endregion ----------------------------------------------------------------------------------
 }

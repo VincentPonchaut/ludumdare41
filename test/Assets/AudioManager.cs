@@ -17,6 +17,9 @@ public class AudioManager : MonoBehaviour
     #region Methods
     public void PlayBackgroundMusic(AudioClip clip)
     {
+        if (bgmSource == null)
+            return;
+
         bgmSource.clip = clip;
         bgmSource.volume = BgmVolume;
         bgmSource.Play();

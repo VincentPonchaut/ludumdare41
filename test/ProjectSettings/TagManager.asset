@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Exit
   - Enemy
+  - CineCam
   layers:
   - Default
   - TransparentFX

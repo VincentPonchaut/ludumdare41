@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Cinemachine;
 
 #region Utility Classes
 class CharacterData
@@ -102,6 +103,8 @@ public class LevelManager : MonoBehaviour
     // User Interface
     public GameObject MainUI;
 
+    //Cinemachine Camera
+    public CinemachineVirtualCamera virtualCamera;
     #endregion
 
     #region Methods
@@ -180,9 +183,25 @@ public class LevelManager : MonoBehaviour
 
             // Spawn enemies
             SpawnRandomEnemies();
+
+            //GettingCinemachineCamera
+            GetCinemachineCamera();
         }
     }
 
+    private void GetCinemachineCamera()
+    {
+
+        //Getting the CineCamera
+        Debug.Log("HERE");
+        virtualCamera = GameObject.FindGameObjectWithTag("CineCam").GetComponent<CinemachineVirtualCamera>();
+
+        if (virtualCamera)
+            Debug.Log("We have a camera cinemachine component");
+
+        virtualCamera.Follow = currentPlayer.transform;
+        Debug.Log(virtualCamera.Follow);
+    }
 
     private void SpawnPlayer()
     {
@@ -404,6 +423,7 @@ public class LevelManager : MonoBehaviour
 
         // Show start menu
         ShowStartMenu();
+
     }
 
     // Update is called once per frame

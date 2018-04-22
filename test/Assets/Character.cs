@@ -91,6 +91,41 @@ public class Character : MonoBehaviour
         this.PlayObjectSound(ThrowSound);
     }
 
+    public void ThrowTowards(Character.ThrowDirection direction)
+    {
+        GameObject item = Instantiate(this.Item,
+                                      this.transform.position,
+                                      this.transform.rotation);
+
+        ThrowableItem tItem = item.GetComponent<ThrowableItem>();
+        if (tItem == null)
+        {
+            DestroyImmediate(item);
+            return;
+        }
+        tItem.Thrower = this;
+
+        // Avoid colliding thrower and throwee
+        Physics2D.IgnoreCollision(item.GetComponent<Collider2D>(), this.GetComponent<Collider2D>());
+
+        int dX = direction == ThrowDirection.Left ? -1 :
+                 direction == ThrowDirection.Right ? +1 :
+                                                      0;
+        int dY = direction == ThrowDirection.Down ? -1 :
+                 direction == ThrowDirection.Up ? +1 :
+                                                     0;
+        int scaleFactor = 5;
+        dX *= scaleFactor;
+        dY *= scaleFactor;
+
+        Vector2 delta = new Vector2(dX, dY);
+
+        item.GetComponent<Rigidbody2D>().velocity = delta * this.ThrowSpeed;
+
+        // Play sound
+        this.PlayObjectSound(ThrowSound);
+    }
+
     public void ApplyDamageFrom(Character enemy, ThrowableItem item)
     {
         //Debug.Log("Applying damage from " + enemy + " to " + this);

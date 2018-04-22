@@ -21,12 +21,18 @@ public class Character : MonoBehaviour
     public delegate void DamageDelegate(Character damagedCharacter, int damageAmount);
     public DamageDelegate damagedEvent;
 
+    public delegate void DeathDelegate(Character deadCharacter);
+    public DeathDelegate deathEvent;
+
     #region Attributes
+
     // Stats
     public int Life = 100;
     public int Strength = 10;
     public int MovementSpeed = 1;
     public float ThrowSpeed = 10.0f;
+
+    private int maxLife;
 
     // Item Management
     public ThrowDirection Direction;
@@ -43,6 +49,13 @@ public class Character : MonoBehaviour
 
     public AudioClip ThrowSound;
     public AudioClip DamagedSound;
+
+    // Animation
+    public Sprite[] Sprites;
+    public float AnimationBufferSeconds = 0.3f;
+    private int spriteIndex = 0;
+    private float lastAnimationTime;
+
     #endregion
 
     #region Character Methods
@@ -139,13 +152,17 @@ public class Character : MonoBehaviour
             damagedEvent(this, dmg); // call all slots
 
         if (this.Life <= 0)
-            Destroy(this.gameObject);
+        {
+            if (this.deathEvent != null)
+                this.deathEvent(this);
+            //Destroy(this.gameObject);
+        }
     }
 
-    public Sprite[] Sprites;
-    public float AnimationBufferSeconds = 0.3f;
-    private int spriteIndex = 0;
-    private float lastAnimationTime;
+    public void HealByMaxPercents(float percents)
+    {
+        Life += (int) Math.Floor(maxLife * (percents / 100.0f));
+    }
 
     public void Animate()
     {
@@ -211,6 +228,9 @@ public class Character : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        // Initialize max life
+        this.maxLife = this.Life;
+
         this.GetComponent<Animator>().enabled = false;
         this.lastAnimationTime = Time.time;
 

@@ -21,7 +21,7 @@ public class MonitorPlayerHealth : MonoBehaviour
             return;
 
         player = playerController.gameObject.GetComponent<Character>();
-        UpdateHealth(null, 0);
+        Refresh();
         player.damagedEvent += UpdateHealth;
     }
 
@@ -32,5 +32,10 @@ public class MonitorPlayerHealth : MonoBehaviour
 
         int hRatioInt = (int)(hRatio * 100.0f);
         HealthText.text = hRatioInt + "%";
+    }
+
+    public void Refresh()
+    {
+        UpdateHealth(null, 0);
     }
 }

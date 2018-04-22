@@ -261,10 +261,25 @@ public class LevelManager : MonoBehaviour
 
         // Connect the player's damaged event to our handler
         currentPlayer.damagedEvent += OnPlayerDamaged;
+        currentPlayer.deathEvent += OnCharacterDeath;
+    }
+
+    private void OnCharacterDeath(Character deadCharacter)
+    {
+        if (deadCharacter.tag == "Player")
+            GameOver();
+        else
+            Destroy(deadCharacter.gameObject);
     }
 
     private void OnPlayerDamaged(Character damagedCharacter, int damageAmount)
     {
+        if (damagedCharacter.Life <= 0)
+        {
+            GameOver();
+            return;
+        }
+
         this.damageBalance = damageAmount;
         PauseGame();
     }
@@ -308,6 +323,7 @@ public class LevelManager : MonoBehaviour
             
             o.GetComponent<SpriteRenderer>().sortingOrder = 50;
             o.GetComponent<Character>().destroyedEvent += HandleEnemyDestroyed;
+            o.GetComponent<Character>().deathEvent += OnCharacterDeath;
         }
     }
 
@@ -416,7 +432,9 @@ public class LevelManager : MonoBehaviour
         audioManager.PlayCorrectAnswerSound();
 
         // Heal player on correct answer
-        currentPlayer.Life += this.damageBalance;
+        //currentPlayer.Life += this.damageBalance;
+        currentPlayer.HealByMaxPercents(30); // Heal 30%
+        FindObjectOfType<MonitorPlayerHealth>().Refresh();
     }
 
     private void HandleWrongAnswer()
@@ -437,8 +455,7 @@ public class LevelManager : MonoBehaviour
 
     public void GameOver()
     {
-        Time.timeScale = 0;
-        Destroy(currentPlayer.gameObject);
+        SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
     }
 
     #endregion

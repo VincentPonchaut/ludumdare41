@@ -12,7 +12,7 @@ class CharacterData
     // Data
     public int Life;
     public int Strength;
-    public int MovementSpeed;
+    public float MovementSpeed;
     public float ThrowSpeed;
     public Character.ThrowDirection Direction;
     public GameObject Item;
@@ -213,7 +213,10 @@ public class LevelManager : MonoBehaviour
             SpawnPlayer();
 
             // Spawn enemies
-            SpawnRandomEnemies();
+            if (GameObject.FindGameObjectWithTag("FinalLevel"))
+                SpawnBoss();
+            else
+                SpawnRandomEnemies();
 
             //GettingCinemachineCamera
             GetCinemachineCamera();
@@ -269,6 +272,26 @@ public class LevelManager : MonoBehaviour
     {
         this.damageBalance = damageAmount;
         PauseGame();
+    }
+
+    private void SpawnBoss()
+    {
+        int nSpawnPoints = 0;
+        //currentLevelEnemyNumber = NbEnemyPerLevel == 0 ? 0 : 1;
+
+        if (currentSpawnManager != null)
+        {
+            nSpawnPoints = currentSpawnManager.EnemySpawnPoints.Length;
+        }
+
+        if (currentSpawnManager.EnemySpawnPoints.Length == 0)
+            return;
+
+        /*Transform spawnTransform = currentSpawnManager.EnemySpawnPoints[0].transform;
+        GameObject boss = Instantiate(TemplateEnemyCharacter, spawnTransform.position, Quaternion.identity) as GameObject;
+        boss.GetComponent<SpriteRenderer>().sortingOrder = 50;
+        boss.GetComponent<Character>().destroyedEvent += HandleEnemyDestroyed;
+        boss.AddComponent<Boss>();*/
     }
 
     private void SpawnRandomEnemies()

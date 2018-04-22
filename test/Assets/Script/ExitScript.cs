@@ -17,7 +17,6 @@ public class ExitScript : MonoBehaviour {
 
     public void InformEnd ()
     {
-        //GetComponent<TilemapCollider2D>().enabled = false;
         IsOver = true;
     }
 

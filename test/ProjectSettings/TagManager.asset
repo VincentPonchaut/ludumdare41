@@ -7,6 +7,7 @@ TagManager:
   - Exit
   - Enemy
   - CineCam
+  - FinalLevel
   layers:
   - Default
   - TransparentFX

@@ -25,7 +25,7 @@ public class Character : MonoBehaviour
     // Stats
     public int Life = 100;
     public int Strength = 10;
-    public int MovementSpeed = 1;
+    public float MovementSpeed = 1;
     public float ThrowSpeed = 10.0f;
 
     // Item Management

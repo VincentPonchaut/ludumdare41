@@ -7,8 +7,9 @@ public class WelcomeScene : MonoBehaviour
 {
     public void StartGame(bool asVegetarian)
     {
-        // TODO: handle choice
-        SceneManager.LoadScene("Init");
+        LevelManager.RequestedGameMode = asVegetarian ? "Vegetarian" :
+                                                        "Meatarian" ;
+        SceneManager.LoadScene("Init", LoadSceneMode.Single);
     }
 
     // Use this for initialization

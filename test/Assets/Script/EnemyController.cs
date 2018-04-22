@@ -6,7 +6,6 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     Character character;
-
     Character target;
 
     public int ReactionTimeMilliseconds = 60;

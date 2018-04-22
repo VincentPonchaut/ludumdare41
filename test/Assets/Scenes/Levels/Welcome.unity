@@ -743,3 +743,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f3af7818e2121b42bf5e02d8729d811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MeatarianWeapon: {fileID: 1412042934305358, guid: 8dbea02ae03a31e43afb8f5076e9b38d,
+    type: 2}
+  VegetarianWeapon: {fileID: 1794505466801872, guid: 697696e0be72ab44db9c5e81cca5e52d,
+    type: 2}
+  MeatarianSprites:
+  - {fileID: 21300002, guid: 6abc287364859a04899e48d92ac16fd5, type: 3}
+  - {fileID: 21300000, guid: 6abc287364859a04899e48d92ac16fd5, type: 3}
+  VegetarianSprites:
+  - {fileID: 21300000, guid: bef33af397b93ff408194e5d1c6d5967, type: 3}
+  - {fileID: 21300002, guid: bef33af397b93ff408194e5d1c6d5967, type: 3}

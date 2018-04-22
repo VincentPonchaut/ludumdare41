@@ -60,6 +60,15 @@ public class Question
     public string[] content;
     public int correct;
 };
+
+[Serializable]
+public struct GameMode
+{
+    public string Name;
+    public GameObject TemplatePlayerCharacter;
+    public GameObject TemplateEnemyCharacter;
+    public Sprite HeartLogoImage;
+}
 #endregion
 
 public class LevelManager : MonoBehaviour
@@ -79,12 +88,16 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public static string RequestedGameMode = "Meatarian";
+
     // General game info/params
     private int levelCount; // number of level achieved 
 
     public int NbEnemyPerLevel;
     public int RandomLevelIndexMin = 0;
     public int RandomLevelIndexMax = -1;
+
+    public List<GameMode> Modes;
 
     public GameObject TemplatePlayerCharacter;
     public GameObject TemplateEnemyCharacter;
@@ -102,6 +115,16 @@ public class LevelManager : MonoBehaviour
 
     // User Interface
     public GameObject MainUI;
+    public Image HeartLogo;
+    private QuestionList questionList;
+    private Question activeQuestion;
+    public GameObject QuestionOverlay;
+    public GameObject QuestionText;
+    public GameObject Ans1Text;
+    public GameObject Ans2Text;
+    public GameObject Ans3Text;
+    public GameObject Ans4Text;
+    public Text AnswerValueText;
 
     //Cinemachine Camera
     public CinemachineVirtualCamera virtualCamera;
@@ -113,16 +136,6 @@ public class LevelManager : MonoBehaviour
 
     #region Methods
 
-    private QuestionList questionList;
-    private Question activeQuestion;
-    public GameObject QuestionOverlay;
-    public GameObject QuestionText;
-    public GameObject Ans1Text;
-    public GameObject Ans2Text;
-    public GameObject Ans3Text;
-    public GameObject Ans4Text;
-    public Text AnswerValueText;
-
     public void ShowStartMenu()
     {
         // TODO
@@ -131,6 +144,20 @@ public class LevelManager : MonoBehaviour
 
         // temporary
         NextLevel();
+    }
+
+    public void Initialize(string gameModeStr)
+    {
+        foreach (GameMode gm in this.Modes)
+        {
+            if (gm.Name == gameModeStr)
+            {
+                this.TemplatePlayerCharacter = gm.TemplatePlayerCharacter;
+                this.TemplateEnemyCharacter = gm.TemplateEnemyCharacter;
+                this.HeartLogo.sprite = gm.HeartLogoImage;
+                break;
+            }
+        }
     }
 
     public void AttemptExit(/*Vector2 exitPosition*/)
@@ -438,6 +465,9 @@ public class LevelManager : MonoBehaviour
 
         // Fetch audio manager
         audioManager = GetComponent<AudioManager>();
+
+        // Initialize variables
+        Initialize(RequestedGameMode);
 
         // Show start menu
         ShowStartMenu();

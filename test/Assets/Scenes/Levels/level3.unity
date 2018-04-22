@@ -4183,7 +4183,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &443687296
 GameObject:
@@ -4334,7 +4334,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4289692022807426, guid: 2c0c30ad0bdc0644dacde8e7d9f3fd25, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4525372408522766, guid: 2c0c30ad0bdc0644dacde8e7d9f3fd25, type: 2}
       propertyPath: m_LocalPosition.y
@@ -6247,6 +6247,7 @@ GameObject:
   - component: {fileID: 1002543842}
   - component: {fileID: 1002543841}
   - component: {fileID: 1002543843}
+  - component: {fileID: 1002543844}
   m_Layer: 0
   m_Name: Exit
   m_TagString: Exit
@@ -6479,52 +6480,17 @@ TilemapCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
---- !u!1001 &1401194518
-Prefab:
+--- !u!114 &1002543844
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4370973191651874, guid: cd9df0b7184fcac41b5265bbe207c2c0, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4370973191651874, guid: cd9df0b7184fcac41b5265bbe207c2c0, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 4.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4370973191651874, guid: cd9df0b7184fcac41b5265bbe207c2c0, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4370973191651874, guid: cd9df0b7184fcac41b5265bbe207c2c0, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4370973191651874, guid: cd9df0b7184fcac41b5265bbe207c2c0, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4370973191651874, guid: cd9df0b7184fcac41b5265bbe207c2c0, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4370973191651874, guid: cd9df0b7184fcac41b5265bbe207c2c0, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4370973191651874, guid: cd9df0b7184fcac41b5265bbe207c2c0, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1901385401045086, guid: cd9df0b7184fcac41b5265bbe207c2c0, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: cd9df0b7184fcac41b5265bbe207c2c0, type: 2}
-  m_IsPrefabParent: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1002543839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbaa6d695f202f648a671227f48fb8de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1410709315
 GameObject:
   m_ObjectHideFlags: 0
@@ -6595,7 +6561,7 @@ Transform:
   m_Children:
   - {fileID: 1769223534}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1640697704
 GameObject:
@@ -15338,6 +15304,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1902780245}
   - component: {fileID: 1902780244}
+  - component: {fileID: 1902780246}
   m_Layer: 0
   m_Name: Tilemaps
   m_TagString: Untagged
@@ -15371,5 +15338,17 @@ Transform:
   - {fileID: 1002543840}
   - {fileID: 1640697705}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1902780246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1902780243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bad968eb960261344a32aa706c312fb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BGM: {fileID: 8300000, guid: 64fdf279c8b270c43b79a035b0ff800d, type: 3}

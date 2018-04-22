@@ -91,7 +91,8 @@ public class LevelManager : MonoBehaviour
     public static string RequestedGameMode = "Meatarian";
 
     // General game info/params
-    private int levelCount; // number of level achieved 
+    public int levelCount = 0; // number of level achieved 
+    public int MaxLevelCount = 10;
 
     public int NbEnemyPerLevel;
     public int RandomLevelIndexMin = 0;
@@ -103,7 +104,6 @@ public class LevelManager : MonoBehaviour
     public GameObject TemplateEnemyCharacter;
 
     // Current level info
-    private string currentLevelName;
     private int currentLevelEnemyNumber;
     private Grid currentGrid;
     private Character currentPlayer;
@@ -172,24 +172,21 @@ public class LevelManager : MonoBehaviour
 
     private void NextLevel()
     {
-        // TODO 
+        if (levelCount != 0)
+            UnloadPreviousLevel();
+
         // Find next level name by using random
-        int randIndex = UnityEngine.Random.Range(RandomLevelIndexMin, RandomLevelIndexMax);
+        int randIndex = UnityEngine.Random.Range(RandomLevelIndexMin, RandomLevelIndexMax + 1);
         string randLevelName = "level" + randIndex;
 
         LoadLevel("Scenes/Levels/" + randLevelName);
     }
 
-    private void UnloadLevel(string levelName)
+    private void UnloadPreviousLevel()
     {
         // Store player data first
-        PlayerController player = FindObjectOfType<PlayerController>();
-        if (player.GetComponent<Character>())
-            this.characterData.CopyData(player.GetComponent<Character>());
-
-#pragma warning disable CS0618 // Type or member is obsolete
-        SceneManager.UnloadScene(levelName);
-#pragma warning restore CS0618 // Type or member is obsolete
+        if (this.currentPlayer != null)
+            this.characterData.CopyData(currentPlayer);
     }
 
     private void LoadLevel(string levelName)
@@ -204,6 +201,8 @@ public class LevelManager : MonoBehaviour
     {
         if (arg0.name.StartsWith("level"))
         {
+            levelCount++;
+
             currentGrid = FindObjectOfType<Grid>();
             Character.CurrentLevel = currentGrid;
 
@@ -223,6 +222,10 @@ public class LevelManager : MonoBehaviour
 
             // Attempt to play the level's music
             PlayLevelBGM();
+
+            // Refresh observers
+            foreach (LevelChangeListener l in FindObjectsOfType<LevelChangeListener>())
+                l.Refresh();
         }
     }
 
@@ -266,10 +269,25 @@ public class LevelManager : MonoBehaviour
 
         // Connect the player's damaged event to our handler
         currentPlayer.damagedEvent += OnPlayerDamaged;
+        currentPlayer.deathEvent += OnCharacterDeath;
+    }
+
+    private void OnCharacterDeath(Character deadCharacter)
+    {
+        if (deadCharacter.tag == "Player")
+            GameOver();
+        else
+            Destroy(deadCharacter.gameObject);
     }
 
     private void OnPlayerDamaged(Character damagedCharacter, int damageAmount)
     {
+        if (damagedCharacter.Life <= 0)
+        {
+            GameOver();
+            return;
+        }
+
         this.damageBalance = damageAmount;
         PauseGame();
     }
@@ -296,7 +314,7 @@ public class LevelManager : MonoBehaviour
 
     private void SpawnRandomEnemies()
     {
-        int nEnemiesToSpawn = NbEnemyPerLevel;
+        int nEnemiesToSpawn = NbEnemyPerLevel + levelCount;
         currentLevelEnemyNumber = nEnemiesToSpawn;
 
         int nSpawnPoints = 0;
@@ -333,6 +351,7 @@ public class LevelManager : MonoBehaviour
             
             o.GetComponent<SpriteRenderer>().sortingOrder = 50;
             o.GetComponent<Character>().destroyedEvent += HandleEnemyDestroyed;
+            o.GetComponent<Character>().deathEvent += OnCharacterDeath;
         }
     }
 
@@ -441,7 +460,9 @@ public class LevelManager : MonoBehaviour
         audioManager.PlayCorrectAnswerSound();
 
         // Heal player on correct answer
-        currentPlayer.Life += this.damageBalance;
+        //currentPlayer.Life += this.damageBalance;
+        currentPlayer.HealByMaxPercents(30); // Heal 30%
+        FindObjectOfType<MonitorPlayerHealth>().Refresh();
     }
 
     private void HandleWrongAnswer()
@@ -457,7 +478,12 @@ public class LevelManager : MonoBehaviour
         // Hurt player even more on wrong answer
         currentPlayer.Life -= this.damageBalance;
         if (currentPlayer.Life <= 0)
-            Destroy(currentPlayer.gameObject); // and game over please
+            GameOver();
+    }
+
+    public void GameOver()
+    {
+        SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
     }
 
     #endregion

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,11 +20,18 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown("space"))
             character.Throw();
 
-        Move();
+        if (Input.GetAxisRaw("Horizontal") != 0 ||
+            Input.GetAxisRaw("Vertical") != 0)
+        {
+            Move();
+            // TODO: UpdateAnimation() -> in move ?
+        }
     }
 
     private void Move()
     {
+        character.Animate();
+
         float lockPos = 0;
 
         float moveH = Input.GetAxis("Horizontal");
@@ -35,15 +43,21 @@ public class PlayerController : MonoBehaviour
         // Cancel forces
         this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
 
-        if (moveH < 0)
+        // Flip if necessary
+        character.GetComponent<SpriteRenderer>().flipX = (moveH < 0);
+
+        // Determine actual direction
+        if (Math.Abs(moveV) > Math.Abs(moveH))
         {
-            character.Direction = Character.ThrowDirection.Left;
-            character.GetComponent<SpriteRenderer>().flipX = true;
+            // Can be either Up or Down
+            character.Direction = moveV > 0 ? Character.ThrowDirection.Up :
+                                              Character.ThrowDirection.Down;
         }
-        else if (moveH > 0)
+        else
         {
-            character.Direction = Character.ThrowDirection.Right;
-            character.GetComponent<SpriteRenderer>().flipX = false;
+            // Can be either Left or Right
+            character.Direction = moveH < 0 ? Character.ThrowDirection.Left :
+                                              Character.ThrowDirection.Right;
         }
     }
 }

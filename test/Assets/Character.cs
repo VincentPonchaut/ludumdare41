@@ -8,14 +8,17 @@ public class Character : MonoBehaviour
 
     public enum ThrowDirection
     {
-        //Up, // future updates
-        //Down,
+        Up, // future updates
+        Down,
         Left,
         Right
     };
 
     public delegate void DestroyDelegate();
     public DestroyDelegate destroyedEvent;
+
+    public delegate void DamageDelegate(Character damagedCharacter, int damageAmount);
+    public DamageDelegate damagedEvent;
 
     #region Attributes
     // Stats
@@ -36,27 +39,10 @@ public class Character : MonoBehaviour
 
     public void Throw()
     {
-        // Determine Spawn position
-        int itemSpawnPointX = 0;
-
-        switch (this.Direction)
-        {
-            case ThrowDirection.Left:
-                itemSpawnPointX = this.CellPosition.x - 1;
-                break;
-            case ThrowDirection.Right:
-                itemSpawnPointX = this.CellPosition.x + 1;
-                break;
-            default:
-                break;
-        }
-
-        // Spawn a new ThrowableItem
-        Vector3Int targetPos = this.CellPosition;
-        targetPos.x = itemSpawnPointX;
-
-        
-        GameObject item = Instantiate(this.Item, CurrentLevel.CellToLocal(targetPos), Quaternion.identity);
+        /**/
+        GameObject item = Instantiate(this.Item,
+                                      this.transform.position,
+                                      this.transform.rotation);
 
         ThrowableItem tItem = item.GetComponent<ThrowableItem>();
         if (tItem == null)
@@ -67,8 +53,32 @@ public class Character : MonoBehaviour
         }
         tItem.Thrower = this;
 
-        Vector3Int directionVec = targetPos - this.CellPosition;
-        item.GetComponent<Rigidbody2D>().velocity = new Vector2(directionVec.x, directionVec.y) * this.ThrowSpeed;
+        // Avoid colliding thrower and throwee
+        Physics2D.IgnoreCollision(item.GetComponent<Collider2D>(), this.GetComponent<Collider2D>());
+
+        Vector3Int cellPos = CurrentLevel.LocalToCell(this.transform.position);
+
+        int dX = Direction == ThrowDirection.Left  ? -1:
+                 Direction == ThrowDirection.Right ? +1:
+                                                      0;
+        int dY = Direction == ThrowDirection.Down ? -1:
+                 Direction == ThrowDirection.Up   ? +1:
+                                                     0;
+        int scaleFactor = 5 ;
+        dX *= scaleFactor;
+        dY *= scaleFactor;
+
+        Vector2 delta = new Vector2(dX, dY);
+
+        item.GetComponent<Rigidbody2D>().velocity = delta * this.ThrowSpeed;
+        /*/
+        GameObject item = Instantiate(this.Item, this.transform.localPosition, Quaternion.identity);
+        item.GetComponent<ThrowableItem>().Thrower = this;
+
+        Debug.Log(this.GetComponent<Rigidbody2D>());
+        item.GetComponent<Rigidbody2D>().velocity = new Vector2(this.GetComponent<Rigidbody2D>().velocity.x,
+                                                                this.GetComponent<Rigidbody2D>().velocity.y);
+        /**/
     }
 
     public void ApplyDamageFrom(Character enemy, ThrowableItem item)
@@ -80,13 +90,28 @@ public class Character : MonoBehaviour
 
         this.Life -= dmg;
         Debug.Log(this + " [Life: " + Life + "]");
+        this.damagedEvent(this, dmg); // call all slots
 
-        if (this.Life < 0)
+        if (this.Life <= 0)
             Destroy(this.gameObject);
     }
-    void OnCollisionEnter2D()
-    {
 
+    public Sprite[] Sprites;
+    public float AnimationBufferSeconds = 0.3f;
+    private int spriteIndex = 0;
+    private float lastAnimationTime;
+
+    public void Animate()
+    {
+        if (Time.time - this.lastAnimationTime > this.AnimationBufferSeconds)
+        {
+            // Toggle sprite
+            GetComponent<SpriteRenderer>().sprite = Sprites[spriteIndex];
+            spriteIndex++;
+            if (spriteIndex >= Sprites.Length)
+                spriteIndex = 0;
+            this.lastAnimationTime = Time.time;
+        }
     }
     #endregion
 
@@ -95,8 +120,8 @@ public class Character : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //if (this.ItemType.Length > 0)
-        //    this.EquipThrowableItem(this.ItemType);
+        this.GetComponent<Animator>().enabled = false;
+        this.lastAnimationTime = Time.time;
     }
 
     // Update is called once per frame

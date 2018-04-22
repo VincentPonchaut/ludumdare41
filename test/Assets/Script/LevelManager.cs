@@ -75,21 +75,25 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private int LevelCount; // number of level achieved 
+    // General game info/params
+    private int levelCount; // number of level achieved 
+
     public int NbEnemyPerLevel;
-
-    private string CurrentLevel;
-    private int CurrentLevelMaxEnemies;
-    private int CurrentLevelEnemyNumber;
-    private Grid CurrentGrid;
-
     public int RandomLevelIndexMin = 0;
     public int RandomLevelIndexMax = -1;
 
     public GameObject TemplatePlayerCharacter;
     public GameObject TemplateEnemyCharacter;
 
+    // Current level info
+    private string currentLevelName;
+    private int currentLevelEnemyNumber;
+    private Grid currentGrid;
+    private Character currentPlayer;
     private CharacterData characterData = new CharacterData();
+
+    // Damage mechanics
+    int damageBalance;
 
     // User Interface
     public GameObject MainUI;
@@ -104,7 +108,7 @@ public class LevelManager : MonoBehaviour
     public GameObject Ans2Text;
     public GameObject Ans3Text;
     public GameObject Ans4Text;
-
+    public Text AnswerValueText;
 
     public void ShowStartMenu()
     {
@@ -160,8 +164,8 @@ public class LevelManager : MonoBehaviour
     {
         if (arg0.name.StartsWith("level"))
         {
-            CurrentGrid = FindObjectOfType<Grid>();
-            Character.CurrentLevel = CurrentGrid;
+            currentGrid = FindObjectOfType<Grid>();
+            Character.CurrentLevel = currentGrid;
 
             // Spawn player
             SpawnPlayer();
@@ -176,21 +180,28 @@ public class LevelManager : MonoBehaviour
     {
         Debug.Log("Spawn player start");
         GameObject o = Instantiate(TemplatePlayerCharacter) as GameObject;
-        Character c = o.GetComponent<Character>();
-        if (c != null)
+        currentPlayer = o.GetComponent<Character>();
+        if (currentPlayer != null)
         {
             if (!characterData.isNull)
-                characterData.WriteData(c);
+                characterData.WriteData(currentPlayer);
         }
-        c.GetComponent<SpriteRenderer>().sortingOrder = 50;
+        currentPlayer.GetComponent<SpriteRenderer>().sortingOrder = 50;
+        currentPlayer.damagedEvent += OnPlayerDamaged;
 
         Debug.Log("Spawn player end");
+    }
+
+    private void OnPlayerDamaged(Character damagedCharacter, int damageAmount)
+    {
+        this.damageBalance = damageAmount;
+        PauseGame();
     }
 
     private void SpawnRandomEnemies()
     {
         int nEnemiesToSpawn = NbEnemyPerLevel; // TODO
-        CurrentLevelEnemyNumber = nEnemiesToSpawn;
+        currentLevelEnemyNumber = nEnemiesToSpawn;
 
         for (int i = 0; i < nEnemiesToSpawn; ++i)
         {
@@ -204,8 +215,8 @@ public class LevelManager : MonoBehaviour
 
     private void HandleEnemyDestroyed()
     {
-        CurrentLevelEnemyNumber--;
-        if (CurrentLevelEnemyNumber <= 0)
+        currentLevelEnemyNumber--;
+        if (currentLevelEnemyNumber <= 0)
         {
             GameObject ExitTilemap = GameObject.FindGameObjectWithTag("Exit");
             ExitTilemap.GetComponent<ExitScript>().ChangeExitSprite();
@@ -227,6 +238,7 @@ public class LevelManager : MonoBehaviour
     public void ResumeGame()
     {
         Time.timeScale = 1;
+        AnswerValueText.gameObject.SetActive(false);
         QuestionOverlay.SetActive(false);
         //pausePanel.SetActive(false);
         //enable the scripts again
@@ -285,17 +297,37 @@ public class LevelManager : MonoBehaviour
         }
 
         // Then resume playing
-        ResumeGame();
+        StartCoroutine(ResumeAfterSeconds());
+    }
+
+    IEnumerator ResumeAfterSeconds()
+    {
+        yield return new WaitForSecondsRealtime(1);
+        LevelManager.Instance.ResumeGame();
     }
 
     private void HandleCorrectAnswer()
     {
+        // Show "Correct" text
+        AnswerValueText.text = "Correct!";
+        AnswerValueText.color = Color.green;
+        AnswerValueText.gameObject.SetActive(true);
 
+        // Heal player on correct answer
+        currentPlayer.Life += this.damageBalance;
     }
 
     private void HandleWrongAnswer()
     {
+        // Show "Wrong" text
+        AnswerValueText.text = "Wrong!";
+        AnswerValueText.color = Color.red;
+        AnswerValueText.gameObject.SetActive(true);
 
+        // Hurt player even more on wrong answer
+        currentPlayer.Life -= this.damageBalance;
+        if (currentPlayer.Life <= 0)
+            Destroy(currentPlayer.gameObject); // and game over please
     }
 
     #endregion

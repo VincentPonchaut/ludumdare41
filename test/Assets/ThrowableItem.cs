@@ -9,7 +9,7 @@ public class ThrowableItem : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        //Debug.Log(this + " collided with " + collision.gameObject);
+        Debug.Log(this + " collided with " + collision.gameObject);
 
         if (collision.gameObject.GetComponent<ThrowableItem>())
         {

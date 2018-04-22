@@ -292,13 +292,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NbEnemyPerLevel: 5
-  RandomLevelIndexMin: 2
-  RandomLevelIndexMax: 2
+  RandomLevelIndexMin: 1
+  RandomLevelIndexMax: 1
   TemplatePlayerCharacter: {fileID: 1227978873114666, guid: 054c3facc9122a24d974f43de0babeda,
     type: 2}
   TemplateEnemyCharacter: {fileID: 1705960565410012, guid: cf891f6276b288f46a9ec999b24f2f1a,
     type: 2}
   MainUI: {fileID: 1697194515}
+  virtualCamera: {fileID: 0}
   QuestionOverlay: {fileID: 157685180}
   QuestionText: {fileID: 335827351}
   Ans1Text: {fileID: 1698978521}

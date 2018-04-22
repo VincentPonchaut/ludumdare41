@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+#region Utility Classes
 class CharacterData
 {
     // Data
@@ -58,9 +59,11 @@ public class Question
     public string[] content;
     public int correct;
 };
+#endregion
 
 public class LevelManager : MonoBehaviour
 {
+    #region Attributes
     private static LevelManager instance;
     public static LevelManager Instance
     {
@@ -90,6 +93,7 @@ public class LevelManager : MonoBehaviour
     private int currentLevelEnemyNumber;
     private Grid currentGrid;
     private Character currentPlayer;
+    private SpawnManager currentSpawnManager;
     private CharacterData characterData = new CharacterData();
 
     // Damage mechanics
@@ -98,8 +102,10 @@ public class LevelManager : MonoBehaviour
     // User Interface
     public GameObject MainUI;
 
+    #endregion
+
     #region Methods
-    
+
     private QuestionList questionList;
     private Question activeQuestion;
     public GameObject QuestionOverlay;
@@ -167,6 +173,8 @@ public class LevelManager : MonoBehaviour
             currentGrid = FindObjectOfType<Grid>();
             Character.CurrentLevel = currentGrid;
 
+            currentSpawnManager = FindObjectOfType<SpawnManager>();
+
             // Spawn player
             SpawnPlayer();
 
@@ -178,18 +186,24 @@ public class LevelManager : MonoBehaviour
 
     private void SpawnPlayer()
     {
-        Debug.Log("Spawn player start");
-        GameObject o = Instantiate(TemplatePlayerCharacter) as GameObject;
-        currentPlayer = o.GetComponent<Character>();
-        if (currentPlayer != null)
-        {
-            if (!characterData.isNull)
-                characterData.WriteData(currentPlayer);
-        }
-        currentPlayer.GetComponent<SpriteRenderer>().sortingOrder = 50;
-        currentPlayer.damagedEvent += OnPlayerDamaged;
+        Transform spawnTransform = null;
+        if (currentSpawnManager != null)
+            spawnTransform = currentSpawnManager.PlayerSpawnPoint.transform;
 
-        Debug.Log("Spawn player end");
+        GameObject o = Instantiate(TemplatePlayerCharacter,
+                                   spawnTransform.position,
+                                   Quaternion.identity) as GameObject;
+        currentPlayer = o.GetComponent<Character>();
+
+        // Restore previous level data
+        if (!characterData.isNull)
+            characterData.WriteData(currentPlayer);
+
+        // Ensure character will be visible
+        currentPlayer.GetComponent<SpriteRenderer>().sortingOrder = 50;
+
+        // Connect the player's damaged event to our handler
+        currentPlayer.damagedEvent += OnPlayerDamaged;
     }
 
     private void OnPlayerDamaged(Character damagedCharacter, int damageAmount)
@@ -200,15 +214,42 @@ public class LevelManager : MonoBehaviour
 
     private void SpawnRandomEnemies()
     {
-        int nEnemiesToSpawn = NbEnemyPerLevel; // TODO
+        int nEnemiesToSpawn = NbEnemyPerLevel;
         currentLevelEnemyNumber = nEnemiesToSpawn;
+
+        int nSpawnPoints = 0;
+        int iSpawnPoint = 0; // index
+
+        if (currentSpawnManager != null)
+        {
+            nSpawnPoints = currentSpawnManager.EnemySpawnPoints.Length;
+        }
 
         for (int i = 0; i < nEnemiesToSpawn; ++i)
         {
-            // TODO: determine random position
-            GameObject o = Instantiate(TemplateEnemyCharacter) as GameObject;
-            o.GetComponent<SpriteRenderer>().sortingOrder = 50;
+            GameObject o = null;
 
+            if (nSpawnPoints > 0)
+            {
+                Transform spawnTransform = currentSpawnManager.EnemySpawnPoints[iSpawnPoint].transform;
+
+                // Prepare next iteration to use next valid spawn point
+                iSpawnPoint++;
+                if (iSpawnPoint == nSpawnPoints ||
+                    currentSpawnManager.EnemySpawnPoints[iSpawnPoint] == null)
+                    iSpawnPoint = 0;
+
+                // Perform instantiation
+                o = Instantiate(TemplateEnemyCharacter,
+                                spawnTransform.position,
+                                Quaternion.identity) as GameObject;
+            }
+            else
+            {
+                o = Instantiate(TemplateEnemyCharacter) as GameObject;
+            }
+            
+            o.GetComponent<SpriteRenderer>().sortingOrder = 50;
             o.GetComponent<Character>().destroyedEvent += HandleEnemyDestroyed;
         }
     }

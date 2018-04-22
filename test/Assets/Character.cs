@@ -57,8 +57,6 @@ public class Character : MonoBehaviour
         // Avoid colliding thrower and throwee
         Physics2D.IgnoreCollision(item.GetComponent<Collider2D>(), this.GetComponent<Collider2D>());
 
-        Vector3Int cellPos = CurrentLevel.LocalToCell(this.transform.position);
-
         int dX = Direction == ThrowDirection.Left  ? -1:
                  Direction == ThrowDirection.Right ? +1:
                                                       0;

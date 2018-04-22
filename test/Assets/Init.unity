@@ -290,8 +290,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NbEnemyPerLevel: 1
-  RandomLevelIndexMin: 1
-  RandomLevelIndexMax: 3
+  RandomLevelIndexMin: 6
+  RandomLevelIndexMax: 6
   TemplatePlayerCharacter: {fileID: 1227978873114666, guid: 054c3facc9122a24d974f43de0babeda,
     type: 2}
   TemplateEnemyCharacter: {fileID: 1705960565410012, guid: cf891f6276b288f46a9ec999b24f2f1a,

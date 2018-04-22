@@ -91,7 +91,7 @@ public class LevelManager : MonoBehaviour
     public static string RequestedGameMode = "Meatarian";
 
     // General game info/params
-    private int levelCount; // number of level achieved 
+    private int levelCount = 0; // number of level achieved 
 
     public int NbEnemyPerLevel;
     public int RandomLevelIndexMin = 0;
@@ -103,7 +103,6 @@ public class LevelManager : MonoBehaviour
     public GameObject TemplateEnemyCharacter;
 
     // Current level info
-    private string currentLevelName;
     private int currentLevelEnemyNumber;
     private Grid currentGrid;
     private Character currentPlayer;
@@ -172,24 +171,21 @@ public class LevelManager : MonoBehaviour
 
     private void NextLevel()
     {
-        // TODO 
+        if (levelCount != 0)
+            UnloadPreviousLevel();
+
         // Find next level name by using random
-        int randIndex = UnityEngine.Random.Range(RandomLevelIndexMin, RandomLevelIndexMax);
+        int randIndex = UnityEngine.Random.Range(RandomLevelIndexMin, RandomLevelIndexMax + 1);
         string randLevelName = "level" + randIndex;
 
         LoadLevel("Scenes/Levels/" + randLevelName);
     }
 
-    private void UnloadLevel(string levelName)
+    private void UnloadPreviousLevel()
     {
         // Store player data first
-        PlayerController player = FindObjectOfType<PlayerController>();
-        if (player.GetComponent<Character>())
-            this.characterData.CopyData(player.GetComponent<Character>());
-
-#pragma warning disable CS0618 // Type or member is obsolete
-        SceneManager.UnloadScene(levelName);
-#pragma warning restore CS0618 // Type or member is obsolete
+        if (this.currentPlayer != null)
+            this.characterData.CopyData(currentPlayer);
     }
 
     private void LoadLevel(string levelName)
@@ -204,6 +200,8 @@ public class LevelManager : MonoBehaviour
     {
         if (arg0.name.StartsWith("level"))
         {
+            levelCount++;
+
             currentGrid = FindObjectOfType<Grid>();
             Character.CurrentLevel = currentGrid;
 
@@ -273,7 +271,7 @@ public class LevelManager : MonoBehaviour
 
     private void SpawnRandomEnemies()
     {
-        int nEnemiesToSpawn = NbEnemyPerLevel;
+        int nEnemiesToSpawn = NbEnemyPerLevel + levelCount;
         currentLevelEnemyNumber = nEnemiesToSpawn;
 
         int nSpawnPoints = 0;
@@ -434,7 +432,13 @@ public class LevelManager : MonoBehaviour
         // Hurt player even more on wrong answer
         currentPlayer.Life -= this.damageBalance;
         if (currentPlayer.Life <= 0)
-            Destroy(currentPlayer.gameObject); // and game over please
+            GameOver();
+    }
+
+    public void GameOver()
+    {
+        Time.timeScale = 0;
+        Destroy(currentPlayer.gameObject);
     }
 
     #endregion

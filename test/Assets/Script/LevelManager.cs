@@ -105,6 +105,10 @@ public class LevelManager : MonoBehaviour
 
     //Cinemachine Camera
     public CinemachineVirtualCamera virtualCamera;
+
+    // Audio Manager
+    private AudioManager audioManager;
+
     #endregion
 
     #region Methods
@@ -186,6 +190,9 @@ public class LevelManager : MonoBehaviour
 
             //GettingCinemachineCamera
             GetCinemachineCamera();
+
+            // Attempt to play the level's music
+            PlayLevelBGM();
         }
     }
 
@@ -201,6 +208,16 @@ public class LevelManager : MonoBehaviour
 
         virtualCamera.Follow = currentPlayer.transform;
         Debug.Log(virtualCamera.Follow);
+        
+    }
+
+    private void PlayLevelBGM()
+    {
+        LevelInfo levelInfo = FindObjectOfType<LevelInfo>();
+        if (levelInfo != null)
+        {
+            audioManager.PlayBackgroundMusic(levelInfo.BGM);
+        }
     }
 
     private void SpawnPlayer()
@@ -420,6 +437,9 @@ public class LevelManager : MonoBehaviour
 
         DontDestroyOnLoad(this.MainUI);
         InitializeQuestions();
+
+        // Fetch audio manager
+        audioManager = GetComponent<AudioManager>();
 
         // Show start menu
         ShowStartMenu();

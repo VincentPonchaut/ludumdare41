@@ -155,13 +155,14 @@ public class Character : MonoBehaviour
         {
             if (this.deathEvent != null)
                 this.deathEvent(this);
-            //Destroy(this.gameObject);
         }
     }
 
     public void HealByMaxPercents(float percents)
     {
         Life += (int) Math.Floor(maxLife * (percents / 100.0f));
+        if (Life > maxLife)
+            Life = maxLife;
     }
 
     public void Animate()

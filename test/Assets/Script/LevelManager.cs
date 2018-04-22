@@ -136,16 +136,6 @@ public class LevelManager : MonoBehaviour
 
     #region Methods
 
-    public void ShowStartMenu()
-    {
-        // TODO
-        // Set template character
-        //characterData.CopyData(templatePlayerCharacter.GetComponent<Character>());
-
-        // temporary
-        NextLevel();
-    }
-
     public void Initialize(string gameModeStr)
     {
         foreach (GameMode gm in this.Modes)
@@ -160,25 +150,26 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void AttemptExit(/*Vector2 exitPosition*/)
+    public void AttemptExit()
     {
         NextLevel();
     }
 
-    private void RestartLevel()
-    {
-
-    }
-
     private void NextLevel()
     {
-        if (levelCount != 0)
+        if (levelCount > 0)
             UnloadPreviousLevel();
+
+        // Is it time for the boss ?
+        if (levelCount >= MaxLevelCount)
+        {
+            LoadLevel("Scenes/Levels/level6");
+            return;
+        }
 
         // Find next level name by using random
         int randIndex = UnityEngine.Random.Range(RandomLevelIndexMin, RandomLevelIndexMax + 1);
         string randLevelName = "level" + randIndex;
-
         LoadLevel("Scenes/Levels/" + randLevelName);
     }
 
@@ -192,8 +183,6 @@ public class LevelManager : MonoBehaviour
     private void LoadLevel(string levelName)
     {
         // Load level
-        //SceneManager.LoadScene(levelName, LoadSceneMode.Additive);
-        //SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelName));
         SceneManager.LoadScene(levelName, LoadSceneMode.Single);
     }
 
@@ -305,11 +294,11 @@ public class LevelManager : MonoBehaviour
         if (currentSpawnManager.EnemySpawnPoints.Length == 0)
             return;
 
-        /*Transform spawnTransform = currentSpawnManager.EnemySpawnPoints[0].transform;
+        Transform spawnTransform = currentSpawnManager.EnemySpawnPoints[0].transform;
         GameObject boss = Instantiate(TemplateEnemyCharacter, spawnTransform.position, Quaternion.identity) as GameObject;
         boss.GetComponent<SpriteRenderer>().sortingOrder = 50;
         boss.GetComponent<Character>().destroyedEvent += HandleEnemyDestroyed;
-        boss.AddComponent<Boss>();*/
+        boss.AddComponent<Boss>();
     }
 
     private void SpawnRandomEnemies()
@@ -461,7 +450,7 @@ public class LevelManager : MonoBehaviour
 
         // Heal player on correct answer
         //currentPlayer.Life += this.damageBalance;
-        currentPlayer.HealByMaxPercents(30); // Heal 30%
+        currentPlayer.HealByMaxPercents(30.0f); // Heal 30%
         FindObjectOfType<MonitorPlayerHealth>().Refresh();
     }
 
@@ -484,6 +473,11 @@ public class LevelManager : MonoBehaviour
     public void GameOver()
     {
         SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
+    }
+
+    public void GameEnd()
+    {
+        SceneManager.LoadScene("Final", LoadSceneMode.Single);
     }
 
     #endregion
@@ -518,9 +512,8 @@ public class LevelManager : MonoBehaviour
         // Initialize variables
         Initialize(RequestedGameMode);
 
-        // Show start menu
-        ShowStartMenu();
-
+        // Go to first level
+        NextLevel();
     }
 
     // Update is called once per frame

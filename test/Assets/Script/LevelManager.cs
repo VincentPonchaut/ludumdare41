@@ -320,7 +320,7 @@ public class LevelManager : MonoBehaviour
         {
             GameObject ExitTilemap = GameObject.FindGameObjectWithTag("Exit");
             if (ExitTilemap != null)
-                ExitTilemap.GetComponent<ExitScript>().ChangeExitSprite();
+                ExitTilemap.GetComponent<ExitScript>().InformEnd();
         }
     }
 

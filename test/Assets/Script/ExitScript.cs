@@ -5,11 +5,20 @@ using UnityEngine.Tilemaps;
 
 public class ExitScript : MonoBehaviour {
 
-    public Sprite OpenedGate;
+    private bool IsOver = false;
 
-    public void ChangeExitSprite()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        gameObject.SetActive(false);
+        if (IsOver == false)
+            return;
+
+        LevelManager.Instance.AttemptExit();
+    }
+
+    public void InformEnd ()
+    {
+        //GetComponent<TilemapCollider2D>().enabled = false;
+        IsOver = true;
     }
 
 	// Use this for initialization

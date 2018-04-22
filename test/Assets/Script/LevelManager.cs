@@ -186,13 +186,17 @@ public class LevelManager : MonoBehaviour
 
     private void SpawnPlayer()
     {
-        Transform spawnTransform = null;
+        GameObject o = null;
         if (currentSpawnManager != null)
-            spawnTransform = currentSpawnManager.PlayerSpawnPoint.transform;
-
-        GameObject o = Instantiate(TemplatePlayerCharacter,
-                                   spawnTransform.position,
-                                   Quaternion.identity) as GameObject;
+        {
+            o = Instantiate(TemplatePlayerCharacter,
+                            currentSpawnManager.PlayerSpawnPoint.transform.position,
+                            Quaternion.identity) as GameObject;
+        }
+        else
+        {
+            o = Instantiate(TemplatePlayerCharacter) as GameObject;
+        }
         currentPlayer = o.GetComponent<Character>();
 
         // Restore previous level data

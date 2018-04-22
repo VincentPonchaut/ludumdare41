@@ -98,6 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitPrefab: {fileID: 1467905769051378, guid: 6b90f9497beb61045ae6d21c80604482, type: 2}
   Thrower: {fileID: 0}
+  HitSound: {fileID: 8300000, guid: 0cddf201d8c082a4884863f19ebd4fea, type: 3}
 --- !u!212 &212471429339658338
 SpriteRenderer:
   m_ObjectHideFlags: 1

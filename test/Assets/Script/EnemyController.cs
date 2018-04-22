@@ -32,7 +32,7 @@ public class EnemyController : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if ((Time.time - lastActionTime) < ((float) ReactionTimeMilliseconds / 1000.0f))
+        if ((Time.time - lastActionTime) < ((float)ReactionTimeMilliseconds / 1000.0f))
             return;
 
         bool firingAuthorized = Time.time - lastFireTime > ((float)FireTimeMilliseconds / 1000.0f);

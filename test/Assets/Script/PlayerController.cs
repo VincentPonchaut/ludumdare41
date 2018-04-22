@@ -24,7 +24,6 @@ public class PlayerController : MonoBehaviour
             Input.GetAxisRaw("Vertical") != 0)
         {
             Move();
-            // TODO: UpdateAnimation() -> in move ?
         }
     }
 

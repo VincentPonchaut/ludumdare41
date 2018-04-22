@@ -178,7 +178,7 @@ public class LevelManager : MonoBehaviour
 
     private void SpawnPlayer()
     {
-        //Debug.Log("Spawn player start");
+        Debug.Log("Spawn player start");
         GameObject o = Instantiate(TemplatePlayerCharacter) as GameObject;
         currentPlayer = o.GetComponent<Character>();
         if (currentPlayer != null)
@@ -189,7 +189,7 @@ public class LevelManager : MonoBehaviour
         currentPlayer.GetComponent<SpriteRenderer>().sortingOrder = 50;
         currentPlayer.damagedEvent += OnPlayerDamaged;
 
-        //Debug.Log("Spawn player end");
+        Debug.Log("Spawn player end");
     }
 
     private void OnPlayerDamaged(Character damagedCharacter, int damageAmount)
@@ -254,7 +254,7 @@ public class LevelManager : MonoBehaviour
         TextAsset questionsFileJson = Resources.Load("questions") as TextAsset;
         this.questionList = QuestionList.CreateFromJson(questionsFileJson.text);
 
-        //Debug.Log("Loaded " + this.questionList.questions.Length + " questions from JSON file");
+        Debug.Log("Loaded " + this.questionList.questions.Length + " questions from JSON file");
     }
 
     public void SetupRandomQuestion()
@@ -288,13 +288,13 @@ public class LevelManager : MonoBehaviour
         // Handle answer
         if (activeQuestion.correct == answer)
         {
-            //Debug.Log("CORRECT");
+            Debug.Log("CORRECT");
             HandleCorrectAnswer();
         }
         else
         {
             HandleWrongAnswer();
-            //Debug.Log("OHNO");
+            Debug.Log("OHNO");
         }
 
         // Then resume playing

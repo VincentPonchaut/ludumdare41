@@ -7,6 +7,8 @@ public class ThrowableItem : MonoBehaviour
     public GameObject hitPrefab;
     public Character Thrower;
 
+    public AudioClip HitSound;
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         //Debug.Log(this + " collided with " + collision.gameObject);
@@ -21,13 +23,22 @@ public class ThrowableItem : MonoBehaviour
             Destroy(collision.gameObject);
             Destroy(hitObject, 0.1f);
         }
-        else if (this.Thrower != null && collision.gameObject.GetComponent<Character>())
-        {
-            Character hitCharacter = collision.gameObject.GetComponent<Character>();
-            if (hitCharacter == this.Thrower)
-                return;
-            hitCharacter.ApplyDamageFrom(this.Thrower, this);
-        }
+        //else if (this.Thrower != null && collision.gameObject.GetComponent<Character>())
+        //{
+        //    Character hitCharacter = collision.gameObject.GetComponent<Character>();
+        //    if (hitCharacter == this.Thrower)
+        //        return;
+
+        //    // Determine the kind of action relatively to the collider
+        //    if (collision.collider.GetType() == typeof(BoxCollider2D))
+        //    {
+        //        // Movement collider
+        //    }
+        //    else if (collision.collider.GetType() == typeof(CircleCollider2D))
+        //    {
+        //        hitCharacter.ApplyDamageFrom(this.Thrower, this);
+        //    }
+        //}
 
         Destroy(this.gameObject);
     }

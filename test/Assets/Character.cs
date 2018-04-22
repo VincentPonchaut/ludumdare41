@@ -34,6 +34,15 @@ public class Character : MonoBehaviour
 
     // Position
     public Vector3Int CellPosition;
+
+    // Audio
+    private AudioSource objectAudioSource;
+    private AudioSource voiceAudioSource;
+    private float volLowRange = .5f;
+    private float volHighRange = 1.0f;
+
+    public AudioClip ThrowSound;
+    public AudioClip DamagedSound;
     #endregion
 
     #region Character Methods
@@ -57,8 +66,6 @@ public class Character : MonoBehaviour
         // Avoid colliding thrower and throwee
         Physics2D.IgnoreCollision(item.GetComponent<Collider2D>(), this.GetComponent<Collider2D>());
 
-        Vector3Int cellPos = CurrentLevel.LocalToCell(this.transform.position);
-
         int dX = Direction == ThrowDirection.Left  ? -1:
                  Direction == ThrowDirection.Right ? +1:
                                                       0;
@@ -80,6 +87,8 @@ public class Character : MonoBehaviour
         item.GetComponent<Rigidbody2D>().velocity = new Vector2(this.GetComponent<Rigidbody2D>().velocity.x,
                                                                 this.GetComponent<Rigidbody2D>().velocity.y);
         /**/
+
+        this.PlayObjectSound(ThrowSound);
     }
 
     public void ApplyDamageFrom(Character enemy, ThrowableItem item)
@@ -144,7 +153,22 @@ public class Character : MonoBehaviour
                                     Character.ThrowDirection.Right;
         }
     }
-    
+
+    public void PlaySound(AudioSource source, AudioClip clip)
+    {
+        float vol = UnityEngine.Random.Range(volLowRange, volHighRange);
+        source.PlayOneShot(clip, vol);
+    }
+
+    public void PlayObjectSound(AudioClip clip)
+    {
+        this.PlaySound(objectAudioSource, clip);
+    }
+    public void PlayVoiceSound(AudioClip clip)
+    {
+        this.PlaySound(voiceAudioSource, clip);
+    }
+
     #endregion
 
     #region Unity Behavior
@@ -154,6 +178,10 @@ public class Character : MonoBehaviour
     {
         this.GetComponent<Animator>().enabled = false;
         this.lastAnimationTime = Time.time;
+
+        // Audio
+        objectAudioSource = GetComponents<AudioSource>()[0];
+        voiceAudioSource = GetComponents<AudioSource>()[1];
     }
 
     // Update is called once per frame
@@ -167,6 +195,21 @@ public class Character : MonoBehaviour
     {
         if (destroyedEvent != null)
             destroyedEvent();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        ThrowableItem thrownItem = collider.gameObject.GetComponent<ThrowableItem>();
+        if (thrownItem == null || 
+            thrownItem.Thrower == this || // Avoid damaging oneself
+            thrownItem.Thrower.gameObject.tag == this.gameObject.tag) // Friendly fire
+            return;
+
+        this.ApplyDamageFrom(thrownItem.Thrower, thrownItem);
+        this.PlayObjectSound(thrownItem.HitSound);
+        this.PlayVoiceSound(DamagedSound);
+
+        Destroy(thrownItem.gameObject);
     }
 
     #endregion

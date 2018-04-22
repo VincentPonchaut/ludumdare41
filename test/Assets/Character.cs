@@ -48,7 +48,7 @@ public class Character : MonoBehaviour
         ThrowableItem tItem = item.GetComponent<ThrowableItem>();
         if (tItem == null)
         {
-            Debug.Log("Error while creating throwable item");
+            //Debug.Log("Error while creating throwable item");
             DestroyImmediate(item);
             return;
         }
@@ -84,13 +84,13 @@ public class Character : MonoBehaviour
 
     public void ApplyDamageFrom(Character enemy, ThrowableItem item)
     {
-        Debug.Log("Applying damage from " + enemy + " to " + this);
+        //Debug.Log("Applying damage from " + enemy + " to " + this);
 
         int dmg = enemy.Strength;
         // TODO: factor in item later
 
         this.Life -= dmg;
-        Debug.Log(this + " [Life: " + Life + "]");
+        //Debug.Log(this + " [Life: " + Life + "]");
         if (damagedEvent != null)
             damagedEvent(this, dmg); // call all slots
 

@@ -8,7 +8,7 @@ public class GateTrigger : MonoBehaviour {
     {
         if (collision.gameObject.GetComponent<PlayerController>())
         {
-            Debug.Log(collision.gameObject.name);
+            //Debug.Log(collision.gameObject.name);
             LevelManager l = LevelManager.Instance;
             l.AttemptExit();
         }

@@ -289,9 +289,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7880b52fa5b319f45a8dda1cda706c3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NbEnemyPerLevel: 5
-  RandomLevelIndexMin: 5
-  RandomLevelIndexMax: 5
+  NbEnemyPerLevel: 1
+  RandomLevelIndexMin: 3
+  RandomLevelIndexMax: 3
   TemplatePlayerCharacter: {fileID: 1227978873114666, guid: 054c3facc9122a24d974f43de0babeda,
     type: 2}
   TemplateEnemyCharacter: {fileID: 1705960565410012, guid: cf891f6276b288f46a9ec999b24f2f1a,

@@ -54,12 +54,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Life: 100
   Strength: 10
-  MovementSpeed: 1
+  MovementSpeed: 10
   ThrowSpeed: 10
   Direction: 0
   Item: {fileID: 1412042934305358, guid: c6fa085bca4517c44bca2dc0e7cdcee0, type: 2}
-  CurrentLevel: {fileID: 0}
   CellPosition: {x: 0, y: 0, z: 0}
+  Sprites: []
+  AnimationBufferSeconds: 0.3
 --- !u!212 &212259425663123844
 SpriteRenderer:
   m_ObjectHideFlags: 1

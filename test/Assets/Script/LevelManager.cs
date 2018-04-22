@@ -102,6 +102,8 @@ public class LevelManager : MonoBehaviour
     // User Interface
     public GameObject MainUI;
 
+    // Audio Manager
+    private AudioManager audioManager;
     #endregion
 
     #region Methods
@@ -180,9 +182,20 @@ public class LevelManager : MonoBehaviour
 
             // Spawn enemies
             SpawnRandomEnemies();
+
+            // Attempt to play the level's music
+            PlayLevelBGM();
         }
     }
 
+    private void PlayLevelBGM()
+    {
+        LevelInfo levelInfo = FindObjectOfType<LevelInfo>();
+        if (levelInfo != null)
+        {
+            audioManager.PlayBackgroundMusic(levelInfo.BGM);
+        }
+    }
 
     private void SpawnPlayer()
     {
@@ -401,6 +414,9 @@ public class LevelManager : MonoBehaviour
 
         DontDestroyOnLoad(this.MainUI);
         InitializeQuestions();
+
+        // Fetch audio manager
+        audioManager = GetComponent<AudioManager>();
 
         // Show start menu
         ShowStartMenu();

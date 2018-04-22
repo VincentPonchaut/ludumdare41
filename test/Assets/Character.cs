@@ -169,5 +169,29 @@ public class Character : MonoBehaviour
             destroyedEvent();
     }
 
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        ThrowableItem thrownItem = collider.gameObject.GetComponent<ThrowableItem>();
+        if (thrownItem == null ||
+            thrownItem.Thrower == this)
+            return;
+
+        ApplyDamageFrom(thrownItem.Thrower, thrownItem);
+        Destroy(thrownItem.gameObject);
+        /*
+        if (this.Thrower != null && collider.gameObject.GetComponent<Character>())
+        {
+            Character hitCharacter = collider.gameObject.GetComponent<Character>();
+            if (hitCharacter == this.Thrower)
+                return;
+
+            if (collider.GetType() == typeof(CircleCollider2D))
+                hitCharacter.ApplyDamageFrom(this.Thrower, this);
+        }
+
+        Destroy(this.gameObject);
+        */
+    }
+
     #endregion
 }

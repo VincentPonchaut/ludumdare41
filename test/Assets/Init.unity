@@ -254,6 +254,10 @@ Prefab:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 4809601511579970, guid: 6e5d4710ca8a5ba40b9fa3de8558b650, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6e5d4710ca8a5ba40b9fa3de8558b650, type: 2}
   m_IsPrefabParent: 0
@@ -299,6 +303,7 @@ MonoBehaviour:
   TemplateEnemyCharacter: {fileID: 1705960565410012, guid: cf891f6276b288f46a9ec999b24f2f1a,
     type: 2}
   MainUI: {fileID: 1697194515}
+  virtualCamera: {fileID: 0}
   QuestionOverlay: {fileID: 157685180}
   QuestionText: {fileID: 335827351}
   Ans1Text: {fileID: 1698978521}

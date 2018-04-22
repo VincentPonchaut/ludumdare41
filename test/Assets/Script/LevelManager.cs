@@ -387,6 +387,9 @@ public class LevelManager : MonoBehaviour
         AnswerValueText.color = Color.green;
         AnswerValueText.gameObject.SetActive(true);
 
+        // Play "Correct" sound
+        audioManager.PlayCorrectAnswerSound();
+
         // Heal player on correct answer
         currentPlayer.Life += this.damageBalance;
     }
@@ -397,6 +400,9 @@ public class LevelManager : MonoBehaviour
         AnswerValueText.text = "Wrong!";
         AnswerValueText.color = Color.red;
         AnswerValueText.gameObject.SetActive(true);
+
+        // Play "Wrong" sound
+        audioManager.PlayWrongAnswerSound();
 
         // Hurt player even more on wrong answer
         currentPlayer.Life -= this.damageBalance;

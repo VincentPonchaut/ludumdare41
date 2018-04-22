@@ -198,17 +198,9 @@ public class LevelManager : MonoBehaviour
 
     private void GetCinemachineCamera()
     {
-
         //Getting the CineCamera
-        Debug.Log("HERE");
         virtualCamera = GameObject.FindGameObjectWithTag("CineCam").GetComponent<CinemachineVirtualCamera>();
-
-        if (virtualCamera)
-            Debug.Log("We have a camera cinemachine component");
-
         virtualCamera.Follow = currentPlayer.transform;
-        Debug.Log(virtualCamera.Follow);
-        
     }
 
     private void PlayLevelBGM()

@@ -91,7 +91,8 @@ public class LevelManager : MonoBehaviour
     public static string RequestedGameMode = "Meatarian";
 
     // General game info/params
-    private int levelCount = 0; // number of level achieved 
+    public int levelCount = 0; // number of level achieved 
+    public int MaxLevelCount = 10;
 
     public int NbEnemyPerLevel;
     public int RandomLevelIndexMin = 0;
@@ -218,6 +219,10 @@ public class LevelManager : MonoBehaviour
 
             // Attempt to play the level's music
             PlayLevelBGM();
+
+            // Refresh observers
+            foreach (LevelChangeListener l in FindObjectsOfType<LevelChangeListener>())
+                l.Refresh();
         }
     }
 

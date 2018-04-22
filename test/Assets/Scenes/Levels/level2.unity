@@ -189,7 +189,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 460066131}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.7476845, y: 1.8900119, z: -10}
+  m_LocalPosition: {x: -6.0393076, y: 1.8935112, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5362,7 +5362,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1749756143}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!19719996 &1154807725
 TilemapCollider2D:
@@ -7000,7 +7000,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1749756143}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &1168228194
 TilemapRenderer:
@@ -7208,7 +7208,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbaa6d695f202f648a671227f48fb8de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OpenedGate: {fileID: 0}
 --- !u!19719996 &1168228197
 TilemapCollider2D:
   m_ObjectHideFlags: 0
@@ -7261,8 +7260,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1141008502}
-  - {fileID: 1168228193}
   - {fileID: 1154807724}
+  - {fileID: 1168228193}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

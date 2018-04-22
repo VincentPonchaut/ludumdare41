@@ -296,9 +296,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7880b52fa5b319f45a8dda1cda706c3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NbEnemyPerLevel: 0
-  RandomLevelIndexMin: 3
-  RandomLevelIndexMax: 3
+  NbEnemyPerLevel: 1
+  RandomLevelIndexMin: 4
+  RandomLevelIndexMax: 5
   TemplatePlayerCharacter: {fileID: 1227978873114666, guid: 054c3facc9122a24d974f43de0babeda,
     type: 2}
   TemplateEnemyCharacter: {fileID: 1705960565410012, guid: cf891f6276b288f46a9ec999b24f2f1a,
@@ -475,7 +475,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -499,7 +499,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!114 &1632371233 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114687699005294386, guid: 6e5d4710ca8a5ba40b9fa3de8558b650,

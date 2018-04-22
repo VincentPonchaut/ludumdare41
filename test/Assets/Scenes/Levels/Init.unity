@@ -520,12 +520,22 @@ Prefab:
     - target: {fileID: 114033980086514272, guid: 4a00db0974b157d419d4653113905c58,
         type: 2}
       propertyPath: NbEnemyPerLevel
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 114033980086514272, guid: 4a00db0974b157d419d4653113905c58,
         type: 2}
       propertyPath: MaxLevelCount
-      value: 8
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114033980086514272, guid: 4a00db0974b157d419d4653113905c58,
+        type: 2}
+      propertyPath: RandomLevelIndexMax
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114321983162069926, guid: 4a00db0974b157d419d4653113905c58,
+        type: 2}
+      propertyPath: BgmVolume
+      value: 0.23
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4a00db0974b157d419d4653113905c58, type: 2}

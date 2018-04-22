@@ -11,16 +11,4 @@ public class WelcomeScene : MonoBehaviour
                                                         "Meatarian" ;
         SceneManager.LoadScene("Init", LoadSceneMode.Single);
     }
-
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

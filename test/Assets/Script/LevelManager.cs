@@ -210,6 +210,8 @@ public class LevelManager : MonoBehaviour
             GetCinemachineCamera();
 
             // Attempt to play the level's music
+            if (FindObjectOfType<AudioListener>() == null) // hack
+                FindObjectOfType<Camera>().gameObject.AddComponent<AudioListener>();
             PlayLevelBGM();
 
             // Refresh observers
@@ -524,5 +526,6 @@ public class LevelManager : MonoBehaviour
         else if (Input.GetKeyDown("c"))
             ResumeGame();
     }
+
     #endregion ----------------------------------------------------------------------------------
 }

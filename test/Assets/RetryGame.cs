@@ -7,6 +7,9 @@ public class RetryGame : MonoBehaviour
 {
     public void Retry()
     {
+        DestroyImmediate(LevelManager.Instance.MainUI.gameObject);
+        DestroyImmediate(LevelManager.Instance.gameObject);
+
         SceneManager.LoadScene("Welcome", LoadSceneMode.Single);
     }
 }

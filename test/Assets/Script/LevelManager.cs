@@ -112,6 +112,7 @@ public class LevelManager : MonoBehaviour
 
     // Damage mechanics
     int damageBalance;
+    public int HealAmountOnCorrectAnswer = 30;
 
     // User Interface
     public GameObject MainUI;
@@ -479,7 +480,8 @@ public class LevelManager : MonoBehaviour
 
         // Heal player on correct answer
         //currentPlayer.Life += this.damageBalance;
-        currentPlayer.HealByMaxPercents(30.0f); // Heal 30%
+        //currentPlayer.HealByMaxPercents(30.0f); // Heal 30%
+        currentPlayer.HealBy(HealAmountOnCorrectAnswer);
         FindObjectOfType<MonitorPlayerHealth>().Refresh();
     }
 
@@ -494,7 +496,7 @@ public class LevelManager : MonoBehaviour
         audioManager.PlayWrongAnswerSound();
 
         // Hurt player even more on wrong answer
-        currentPlayer.Life -= this.damageBalance;
+        //currentPlayer.Life -= this.damageBalance;
         if (currentPlayer.Life <= 0)
             GameOver();
     }

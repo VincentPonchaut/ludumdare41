@@ -165,6 +165,11 @@ public class Character : MonoBehaviour
             Life = maxLife;
     }
 
+    public void HealBy(int points)
+    {
+        Life += points;
+    }
+
     public void Animate()
     {
         if (Time.time - this.lastAnimationTime > this.AnimationBufferSeconds)

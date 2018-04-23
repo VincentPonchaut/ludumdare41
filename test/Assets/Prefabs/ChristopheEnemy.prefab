@@ -321,7 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Life: 100
-  Strength: 25
+  Strength: 20
   MovementSpeed: 3
   ThrowSpeed: 2
   Direction: 1

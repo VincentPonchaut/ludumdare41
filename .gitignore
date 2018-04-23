@@ -43,3 +43,5 @@ sysinfo.txt
 
 *.log
 test/build.zip
+test/build_windows.zip
+test/build_webgl/

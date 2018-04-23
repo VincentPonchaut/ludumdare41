@@ -22,7 +22,7 @@ public class Boss : MonoBehaviour {
         gameObject.transform.localScale.y * 2,
         gameObject.transform.localScale.z);
 
-        character.Life = character.Life * 20;
+        character.Life = character.Life * 25;
         character.Strength = character.Strength * factor;
         character.MovementSpeed = character.MovementSpeed * 0.5f;
 

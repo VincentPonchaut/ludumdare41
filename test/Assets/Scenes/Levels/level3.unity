@@ -15351,4 +15351,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad968eb960261344a32aa706c312fb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BGM: {fileID: 8300000, guid: 64fdf279c8b270c43b79a035b0ff800d, type: 3}
+  BGM: {fileID: 8300000, guid: 36169c505fdbcc446b12efc179823d7b, type: 3}

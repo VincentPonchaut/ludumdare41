@@ -125,6 +125,7 @@ public class LevelManager : MonoBehaviour
     public GameObject Ans3Text;
     public GameObject Ans4Text;
     public Text AnswerValueText;
+    public Text ClearLevelText;
 
     //Cinemachine Camera
     public CinemachineVirtualCamera virtualCamera;
@@ -168,16 +169,21 @@ public class LevelManager : MonoBehaviour
         }
 
         // Find next level name by using random
-        int randIndex = UnityEngine.Random.Range(RandomLevelIndexMin, RandomLevelIndexMax + 1);
-        string randLevelName = "level" + randIndex;
+        string randLevelName = SceneManager.GetActiveScene().name;
+        while (randLevelName == SceneManager.GetActiveScene().name) // Avoid playing the same level twice in a row
+        {
+            int randIndex = UnityEngine.Random.Range(RandomLevelIndexMin, RandomLevelIndexMax + 1);
+            randLevelName = "level" + randIndex;
+        }
+
         LoadLevel("Scenes/Levels/" + randLevelName);
     }
 
     private void UnloadPreviousLevel()
     {
-        //// Store player data first
-        //if (this.currentPlayer != null)
-        //    this.characterData.CopyData(currentPlayer);
+        // Store player data
+        if (this.currentPlayer != null)
+            this.characterData.CopyData(currentPlayer);
     }
 
     private void LoadLevel(string levelName)
@@ -258,9 +264,9 @@ public class LevelManager : MonoBehaviour
         }
         currentPlayer = o.GetComponent<Character>();
 
-        //// Restore previous level data
-        //if (!characterData.isNull)
-        //    characterData.WriteData(currentPlayer);
+        // Restore previous level data
+        if (!characterData.isNull)
+            characterData.WriteData(currentPlayer);
 
         // Ensure character will be visible
         currentPlayer.GetComponent<SpriteRenderer>().sortingOrder = 50;
@@ -356,6 +362,12 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    IEnumerator WaitAndHideClearLevelText()
+    {
+        yield return new WaitForSeconds(2);
+        ClearLevelText.gameObject.SetActive(false);
+    }
+
     private void HandleEnemyDestroyed()
     {
         currentLevelEnemyNumber--;
@@ -364,6 +376,9 @@ public class LevelManager : MonoBehaviour
             GameObject ExitTilemap = GameObject.FindGameObjectWithTag("Exit");
             if (ExitTilemap != null)
                 ExitTilemap.GetComponent<ExitScript>().InformEnd();
+
+            ClearLevelText.gameObject.SetActive(true);
+            StartCoroutine(WaitAndHideClearLevelText());
         }
     }
 

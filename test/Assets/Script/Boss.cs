@@ -28,7 +28,7 @@ public class Boss : MonoBehaviour {
 
         EnemyController ennemy = gameObject.GetComponent<EnemyController>();
         ennemy.FiringRange = 8;
-        ennemy.FireTimeMilliseconds = 400;
+        ennemy.FireTimeMilliseconds = 800;
 	}
 	
 	// Update is called once per frame

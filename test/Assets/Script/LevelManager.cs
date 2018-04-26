@@ -315,7 +315,7 @@ public class LevelManager : MonoBehaviour
 
         Transform spawnTransform = currentSpawnManager.EnemySpawnPoints[0].transform;
         GameObject boss = Instantiate(TemplateEnemyCharacter, spawnTransform.position, Quaternion.identity) as GameObject;
-        boss.GetComponent<SpriteRenderer>().sortingOrder = 50;
+        boss.GetComponent<SpriteRenderer>().sortingOrder = 50; //LOL
         boss.GetComponent<Character>().destroyedEvent += HandleEnemyDestroyed;
         boss.AddComponent<Boss>();
     }

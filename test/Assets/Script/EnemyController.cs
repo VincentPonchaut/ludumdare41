@@ -64,7 +64,7 @@ public class EnemyController : MonoBehaviour
                 float moveV = movement.y;
 
                 character.Animate();
-                character.MoveBy(moveH, moveV);
+                //character.MoveBy(moveH, moveV);
             }
         }
         else
